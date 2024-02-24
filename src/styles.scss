@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+api-client {
+   display: flex;
+   align-items: center;
+   padding: 20px;   
+
+   & #method-select {
+      width: 10%;
+
+      & mat-select {
+         font-size: 15px;
+      }
+   
+      & .mat-mdc-form-field-subscript-wrapper {
+         display: none;
+      }
+   }
+}
