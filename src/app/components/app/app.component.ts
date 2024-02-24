@@ -1,5 +1,6 @@
 import { AfterContentInit, Attribute, Component, ContentChild, Directive, ElementRef, HostBinding, HostListener, Injectable } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ApiClientComponent } from "../api-client/api-client.component";
 
 @Directive({
    selector: 'h1',
@@ -27,14 +28,14 @@ class NonInjectable {
 @Component({
    selector: 'app-root',
    standalone: true,
-   imports: [RouterOutlet, Red],
+   imports: [RouterOutlet, Red, ApiClientComponent],
    templateUrl: './app.component.html',
    styleUrl: './app.component.scss',
    interpolation: ['(', ')']
 })
 export class AppComponent implements AfterContentInit {
    @ContentChild(Red) h1!: Red;
-   @HostBinding('style.color') color: string = "red"; 
+   // @HostBinding('style.color') color: string = "red"; // applies color: red to all html elements, even child components
    title = 'sample-project';
 
    constructor(private inject: NonInjectable) {
@@ -43,10 +44,14 @@ export class AppComponent implements AfterContentInit {
 
    @HostListener('click')
    onClick() {
-      this.color = "green";
+      // this.color = "green"; // applies color: green to all html elements when clicked, even child components
    }
 
    ngAfterContentInit(): void {
       console.log(this.h1)
    }
 }
+
+// <h1 class="hi">Hi</h1>
+// <h2 #testing>Hello</h2>
+// <h3>(title)</h3>
