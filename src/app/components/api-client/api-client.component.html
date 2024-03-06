@@ -1,11 +1,13 @@
-<mat-form-field id="method-select">
-   <mat-select>
-      <mat-option value="get">GET</mat-option>
-      <mat-option value="post">POST</mat-option>
-      <mat-option value="put">PUT</mat-option>
-      <mat-option value="delete">DELETE</mat-option>
-   </mat-select>
-</mat-form-field>
+<form [formGroup]="loginForm">
+   <mat-form-field [formGroup]="loginForm" appearance="outline">
+      <mat-label>Username</mat-label>
+      <input [formControl]="user_name" matInput placeholder="Placeholder">
+   </mat-form-field>
 
-<input myInput id="url-search" type="text" />
-<button id="send-button">Send</button>
+   <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input [formControl]="password" matInput placeholder="Placeholder">
+   </mat-form-field>
+</form>
+
+<button mat-raised-button color="primary" (click)="submit()">Primary</button>
