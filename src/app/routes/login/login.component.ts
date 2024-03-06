@@ -1,22 +1,18 @@
-import { Component, ViewChild } from '@angular/core';
-import { InputFieldDirective } from '../../directives/input-directive/input-field.directive';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpService } from '../../services/http.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
    selector: 'login',
    standalone: true,
-   imports: [InputFieldDirective, MatInputModule, MatButtonModule, ReactiveFormsModule, CommonModule, MatFormFieldModule],
+   imports: [MatInputModule, MatButtonModule, ReactiveFormsModule, CommonModule],
    templateUrl: './login.component.html',
    styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-   @ViewChild(InputFieldDirective) 
-   input!: InputFieldDirective;
    loginForm!: FormGroup;
 
    constructor(private http: HttpService) { 
@@ -40,8 +36,8 @@ export class LoginComponent {
    }
 
    sendHttpRequest() {
-      this.http.get<any>(this.input.value).subscribe(response => {
-         console.log({response});
-      })
+      // this.http.get<any>(this.input.value).subscribe(response => {
+      //    console.log({response});
+      // })
    }
 }

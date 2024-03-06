@@ -1,6 +1,6 @@
 import { AfterContentInit, Attribute, Component, ContentChild, Directive, ElementRef, HostBinding, HostListener, Injectable } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from "../login/login.component";
+import { LoginComponent } from "../../routes/login/login.component";
 
 @Directive({
    selector: 'h1',
