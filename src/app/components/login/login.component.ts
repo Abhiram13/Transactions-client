@@ -1,26 +1,28 @@
 import { Component, ViewChild } from '@angular/core';
 import { InputFieldDirective } from '../../directives/input-directive/input-field.directive';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpService } from '../../services/http.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-   selector: 'api-client',
+   selector: 'login',
    standalone: true,
-   imports: [InputFieldDirective, MatInputModule, MatButtonModule, ReactiveFormsModule],
-   templateUrl: './api-client.component.html',
-   styleUrl: './api-client.component.scss'
+   imports: [InputFieldDirective, MatInputModule, MatButtonModule, ReactiveFormsModule, CommonModule, MatFormFieldModule],
+   templateUrl: './login.component.html',
+   styleUrl: './login.component.scss'
 })
-export class ApiClientComponent {
+export class LoginComponent {
    @ViewChild(InputFieldDirective) 
    input!: InputFieldDirective;
    loginForm!: FormGroup;
 
    constructor(private http: HttpService) { 
       this.loginForm = new FormGroup({
-         user_name: new FormControl(''),
-         password: new FormControl('')
+         user_name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z]+@[a-z]+$')]),
+         password: new FormControl('', [Validators.required])
       });
    }
 

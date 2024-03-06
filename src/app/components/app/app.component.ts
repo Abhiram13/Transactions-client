@@ -1,6 +1,6 @@
 import { AfterContentInit, Attribute, Component, ContentChild, Directive, ElementRef, HostBinding, HostListener, Injectable } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ApiClientComponent } from "../api-client/api-client.component";
+import { LoginComponent } from "../login/login.component";
 
 @Directive({
    selector: 'h1',
@@ -28,7 +28,7 @@ class NonInjectable {
 @Component({
    selector: 'app-root',
    standalone: true,
-   imports: [RouterOutlet, Red, ApiClientComponent],
+   imports: [RouterOutlet, Red, LoginComponent],
    templateUrl: './app.component.html',
    styleUrl: './app.component.scss',
    interpolation: ['(', ')']
