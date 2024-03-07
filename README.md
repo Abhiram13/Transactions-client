@@ -1,6 +1,6 @@
-# Postman-client
+# Payroll-client
 
-Postman client like application to deep dive into Angular
+Payroll client like application to deep dive into Angular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.0.
 
