@@ -1,11 +1,12 @@
-export const HTMLEvents = {
-   get InputElement() {
-      return InputEvents;
-   }
-}
-
-const InputEvents = {
-   get onInput() {
-      return "input";
-   }
+export enum StatusCode {
+   OK = 200,
+   CREATED = 201,
+   NO_DATA = 204,
+   NOT_MODIFIED = 304,
+   BAD_REQUEST = 400,
+   UNAUTHORISE = 401,
+   FORBIDDEN = 403,
+   NOT_FOUND = 404,
+   SERVER_ERROR = 500,
+   TIMEOUT = 504,
 }

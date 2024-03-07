@@ -14,4 +14,9 @@ export class HttpService {
       const headers = new HttpHeaders();
       return this.http.get<T>(`${this.API_URL}/${url}`, {headers})
    }
+
+   post<P, R>(url: string, body: P): Observable<R> {
+      const headers = new HttpHeaders();
+      return this.http.post<R>(`${this.API_URL}/${url}`, body, {headers});
+   }
 }

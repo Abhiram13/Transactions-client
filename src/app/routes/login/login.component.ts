@@ -4,6 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpService } from '../../services/http.service';
 import { CommonModule } from '@angular/common';
+import { LoginType, StatusCode } from '../../types/export.types';
 
 @Component({
    selector: 'login',
@@ -15,9 +16,10 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
    loginForm!: FormGroup;
 
+   //'^[a-zA-Z]+@[a-z]+$'
    constructor(private http: HttpService) { 
       this.loginForm = new FormGroup({
-         user_name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z]+@[a-z]+$')]),
+         user_name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]),
          password: new FormControl('', [Validators.required])
       });
    }
@@ -31,13 +33,13 @@ export class LoginComponent {
    }
 
    submit() {
-      console.log(this.loginForm.get('user_name')?.value);
-      console.log(this.loginForm.get('password')?.value)
-   }
+      const payload: LoginType.IPayload = {
+         user_name: this.loginForm.get('user_name')?.value || "",
+         password: this.loginForm.get('password')?.value || "",
+      }
 
-   sendHttpRequest() {
-      // this.http.get<any>(this.input.value).subscribe(response => {
-      //    console.log({response});
-      // })
+      this.http.post<LoginType.IPayload, LoginType.IResponse>("login", payload).subscribe(response => {
+         console.log(response);
+      });
    }
 }

@@ -1,1 +1,2 @@
-export {HTMLEvents} from "./enums.types";
+export {StatusCode} from "./enums.types";
+export {LoginType} from "./login.types";
