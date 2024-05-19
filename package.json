@@ -1,5 +1,5 @@
 {
-  "name": "sample-project",
+  "name": "Transactions-client",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

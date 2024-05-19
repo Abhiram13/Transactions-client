@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sample-project": {
+    "Transactions-client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/sample-project",
+            "outputPath": "dist/Transactions-client",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -63,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "sample-project:build:production"
+              "buildTarget": "Transactions-client:build:production"
             },
             "development": {
-              "buildTarget": "sample-project:build:development"
+              "buildTarget": "Transactions-client:build:development"
             }
           },
           "defaultConfiguration": "production"
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "sample-project:build"
+            "buildTarget": "Transactions-client:build"
           }
         },
         "test": {

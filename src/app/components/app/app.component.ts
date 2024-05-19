@@ -36,7 +36,7 @@ class NonInjectable {
 export class AppComponent implements AfterContentInit {
    @ContentChild(Red) h1!: Red;
    // @HostBinding('style.color') color: string = "red"; // applies color: red to all html elements, even child components
-   title = 'sample-project';
+   title = 'Transactions-client';
 
    constructor(private inject: NonInjectable) {
       this.inject.run()      

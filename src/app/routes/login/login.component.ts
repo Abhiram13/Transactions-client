@@ -5,6 +5,7 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
 import { HttpService } from '../../services/http.service';
 import { CommonModule } from '@angular/common';
 import { LoginType, StatusCode } from '../../types/export.types';
+import { Router } from '@angular/router';
 
 @Component({
    selector: 'login',
@@ -17,7 +18,7 @@ export class LoginComponent {
    loginForm!: FormGroup;
 
    //'^[a-zA-Z]+@[a-z]+$'
-   constructor(private http: HttpService) { 
+   constructor(private http: HttpService, private route: Router) { 
       this.loginForm = new FormGroup({
          user_name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]),
          password: new FormControl('', [Validators.required])
@@ -39,7 +40,9 @@ export class LoginComponent {
       }
 
       this.http.post<LoginType.IPayload, LoginType.IResponse>("login", payload).subscribe(response => {
-         console.log(response);
+         if (response?.status === StatusCode.OK) {
+            this.route.navigate(['/dashboard']);
+         }
       });
    }
 }
