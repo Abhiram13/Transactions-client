@@ -4,20 +4,6 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-login {
+.d-flex {
    display: flex;
-   align-items: center;
-   padding: 20px;   
-
-   & #method-select {
-      width: 10%;
-
-      & mat-select {
-         font-size: 15px;
-      }
-   
-      & .mat-mdc-form-field-subscript-wrapper {
-         display: none;
-      }
-   }
 }

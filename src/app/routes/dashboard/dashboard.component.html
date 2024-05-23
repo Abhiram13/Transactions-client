@@ -1,44 +1,33 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<section *ngIf="!error" style="margin-top: 10px;">
+   <div class="d-flex" style="margin: auto; width: 90vw; justify-content: space-between; align-items: center;">
+      <h4 style="margin: 0;">Total transactions: 10</h4>
+      <button mat-flat-button color="primary">Add</button>
+   </div>
 
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()"
-        [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
-      </mat-checkbox>
-    </th>
-    <td mat-cell *matCellDef="let row">
-      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-        [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
-      </mat-checkbox>
-    </td>
-  </ng-container>
+   <section class="d-flex" style="margin: auto; width: 90vw; margin-top: 10px;">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+         <!-- Date Column -->
+         <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let element">{{element.date}}</td>
+         </ng-container>
 
-  <!-- Position Column -->
-  <!-- <ng-container matColumnDef="position">
-     <th mat-header-cell *matHeaderCellDef> No. </th>
-     <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-   </ng-container> -->
+         <!-- Debit Column -->
+         <ng-container matColumnDef="debit">
+            <th mat-header-cell *matHeaderCellDef>Debit</th>
+            <td mat-cell *matCellDef="let element">{{element.debit}}</td>
+         </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Organisation name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
+         <!-- Credit Column -->
+         <ng-container matColumnDef="credit">
+            <th mat-header-cell *matHeaderCellDef>Credit</th>
+            <td mat-cell *matCellDef="let element">{{element.credit}}</td>
+         </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="weight">
-    <th mat-header-cell *matHeaderCellDef> Manager </th>
-    <td mat-cell *matCellDef="let element"> {{element.manager}} </td>
-  </ng-container>
+         <tr mat-header-row *matHeaderRowDef="columns"></tr>
+         <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+      </table>
+   </section>
+</section>
 
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="symbol">
-    <th mat-header-cell *matHeaderCellDef> No. of employees </th>
-    <td mat-cell *matCellDef="let element"> {{element.employee_count}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
-  </tr>
-</table>
+<h5 *ngIf="error">Something went wrong!! {{message}}</h5>
