@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
     styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-    columns: string[] = ['date', 'debit', 'credit'];
+    columns: string[] = ['date', 'debit', 'credit', 'count'];
     error: boolean = false;
     message: string = "";
     private subscription: Subscription = new Subscription();
@@ -23,24 +23,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
         {date: "2024-08-04", credit: 1.5, debit: 20, count: 20}
     ];
 
-    constructor(private readonly transactionService: TransactionService) {}
+    /**
+     * @param TRANSACTION Service that allows to call `transactions` APIs as methods
+     */
+    constructor(private readonly TRANSACTION: TransactionService) { }
 
     ngOnInit(): void {
         this.fetchTransactions();
     }
 
     private fetchTransactions(): void {
-        this.subscription = this.transactionService.listByDate().subscribe(this.fetchTransactionsSuccess, this.fetchTransactionsError);
+        this.TRANSACTION.listByDate().subscribe({next: this.fetchTransactionsSuccess.bind(this), error: this.fetchTransactionsError.bind(this)});
     }
 
-    private fetchTransactionsSuccess(response: IApiResonse<IListByDate[]>) {
+    private fetchTransactionsSuccess(response: IApiResonse<IListByDate[]>): void {
         if (response.status_code === StatusCode.OK) {
-            this.dataSource = response.result || [];
+            this.dataSource = response?.result || [];
             return;
         }
     }
 
-    private fetchTransactionsError(error: Error) {
+    private fetchTransactionsError(error: Error): void {
         this.message = JSON.stringify(error?.message);
         this.error = true;
     }

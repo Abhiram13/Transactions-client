@@ -11,11 +11,12 @@ interface IListParams {
 @Injectable({providedIn: 'root'})
 export class TransactionService {
     private readonly PREFIX: string = "/transactions";
-    constructor(private http: HttpService) {}
+
+    constructor(private readonly HTTP: HttpService) {}
 
     listByDate(params?: Partial<IListParams>): Observable<IApiResonse<IListByDate[]>> {
         const PARAMS: HttpParams = CreateParams(params);
 
-        return this.http.get<IListByDate[]>(this.PREFIX, PARAMS);
+        return this.HTTP.get<IListByDate[]>(this.PREFIX, PARAMS);
     }
 }
