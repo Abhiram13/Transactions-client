@@ -8,7 +8,7 @@ export class HttpService {
     private readonly API: string;
 
     constructor(private http: HttpClient) {
-        this.API = "http://192.168.0.123:3002";
+        this.API = "https://budget-tracker-dotnet-edu262f3lq-uc.a.run.app";
     }
 
     /**
