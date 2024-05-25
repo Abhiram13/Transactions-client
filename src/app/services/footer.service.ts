@@ -1,14 +1,12 @@
 import { ContentChild, Injectable, ViewChild, ViewContainerRef } from "@angular/core";
 import { FooterComponent } from "../components/footer/footer.component";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({ providedIn: 'root' })
 export class FooterService {
+    constructor (private readonly SNACK: MatSnackBar) {}
 
-    constructor() {
-        // this.footerElement = ViewChild('footer', {read: ViewContainerRef});
-    }
-
-    invoke() {
-        // this.footerElement.createComponent(FooterComponent);        
+    invoke(message: string, action: string = "Dismiss"): void {
+        this.SNACK.open(message, action, {duration: 4000});
     }
 }

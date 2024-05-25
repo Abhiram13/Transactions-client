@@ -9,26 +9,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CategoryService } from '../../../services/category.service';
 import { BankService } from '../../../services/bank.service';
-import { ICategoryList, IBankList, StatusCode } from "../../../types/export.types";
+import { CategoryNS, BankNS, StatusCode, TransactionNS } from "../../../types/export.types";
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
-enum TransactionType {
-    Debit = 1,
-    Credit = 2,
-    PartialDebit = 3,
-    PartialCredit = 4
-}
-
-interface ITransactionInsertPayload {
-    amount: number;
-    type: TransactionType;
-    description: string;
-    date: string;
-    due: boolean;
-    from_bank: string;
-    to_bank: string;
-    category_id: string;
-}
+import { FooterService } from '../../../services/footer.service';
+import { TransactionService } from '../../../services/transactions.service';
 
 @Component({
     selector: 'app-configure',
@@ -40,13 +24,13 @@ interface ITransactionInsertPayload {
 })
 export class ConfigureComponent implements OnInit {
     formGroup!: FormGroup;
-    banks: IBankList[] = [];
-    categories: ICategoryList[] = [];
+    banks: BankNS.IList[] = [];
+    categories: CategoryNS.IList[] = [];
     todayDate: Date = new Date();
 
-    constructor (private readonly BUILDER: FormBuilder, private readonly CATGEORY: CategoryService, private readonly BANK: BankService) {
+    constructor (private readonly BUILDER: FormBuilder, private readonly SERVICE: TransactionService, private readonly CATGEORY: CategoryService, private readonly BANK: BankService, private readonly FOOTER: FooterService) {
         this.formGroup = this.BUILDER.group({
-            amount: ['', [Validators.required, Validators.pattern(/^[0-9]/)]],
+            amount: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,4})?$/)]],
             type: ['', [Validators.required]],
             description: ['', [Validators.required]],
             date: [new Date(), [Validators.required]],
@@ -103,22 +87,51 @@ export class ConfigureComponent implements OnInit {
         return this.formGroup.get("category_id") as FormControl;
     }
 
-    onSubmit(): void {
-        const AMOUNT = this.formGroup.get('amount')?.value;
-        const TYPE = this.formGroup.get('type')?.value;
-        const DESCRIPTION = this.formGroup.get('description')?.value;
-        const DATE = this.formGroup.get('date')?.value;
-        const FROMBANK = this.formGroup.get('from_bank')?.value;
-        const TOBANK = this.formGroup.get('to_bank')?.value;
-        const CATEGORYID = this.formGroup.get('category_id')?.value;
-        const DUE = this.formGroup.get('due')?.value;
-        const TRANSACTION = new Transaction(AMOUNT, CATEGORYID, DATE, DESCRIPTION, DUE, FROMBANK, TOBANK, TYPE);
+    private isFormInValid(): boolean {
+        const CONTROL = this.formGroup?.controls;
 
-        console.log({TRANSACTION});
+        return Boolean(CONTROL?.['amount']?.errors) ||
+            Boolean(CONTROL?.['type']?.errors) ||
+            Boolean(CONTROL?.['description']?.errors) ||
+            Boolean(CONTROL?.['date']?.errors) ||        
+            Boolean(CONTROL?.['from_bank']?.errors) ||
+            Boolean(CONTROL?.['to_bank']?.errors) ||
+            Boolean(CONTROL?.['category_id']?.errors);
+    }
+
+    onSubmit(): void {
+        try {
+            const AMOUNT = this.formGroup.get('amount')?.value;
+            const TYPE = this.formGroup.get('type')?.value;
+            const DESCRIPTION = this.formGroup.get('description')?.value;
+            const DATE = this.formGroup.get('date')?.value;
+            const FROMBANK = this.formGroup.get('from_bank')?.value;
+            const TOBANK = this.formGroup.get('to_bank')?.value;
+            const CATEGORYID = this.formGroup.get('category_id')?.value;
+            const DUE = this.formGroup.get('due')?.value;
+            const TRANSACTION = new Transaction(AMOUNT, CATEGORYID, DATE, DESCRIPTION, DUE, FROMBANK, TOBANK, TYPE);
+
+            if (this.isFormInValid()) {
+                this.FOOTER.invoke("Provide valid details", "Dismiss");
+                return;
+            }
+
+            this.SERVICE.insert(TRANSACTION).subscribe(response => {
+                if (response?.status_code === StatusCode.CREATED) {
+                    this.FOOTER.invoke("Transaction inserted successfully", "Dismiss");
+                } else {
+                    this.FOOTER.invoke(response?.message || "Something went wrong", "Dismiss");
+                }
+            }, error => {
+                this.FOOTER.invoke(error?.message || "Something went wrong", "Dismiss");
+            });
+        } catch (e: any) {
+            this.FOOTER.invoke(e?.message || "Something went wrong", "Dismiss");
+        }        
     }
 }
 
-class Transaction implements ITransactionInsertPayload {
+class Transaction implements TransactionNS.ITransactionInsertPayload {
     amount: number;
     category_id: string;
     date: string;
@@ -128,8 +141,8 @@ class Transaction implements ITransactionInsertPayload {
     to_bank: string;
     type: number;
 
-    constructor(amount: number, category: string, date: string, description: string, due: boolean, fromBank: string, toBank: string, type: TransactionType) {
-        this.amount = Number(amount);
+    constructor(amount: string, category: string, date: string, description: string, due: boolean, fromBank: string, toBank: string, type: TransactionNS.TransactionType) {
+        this.amount = parseFloat(amount);
         this.category_id = category;
         this.description = description;
         this.due = due;
@@ -141,6 +154,6 @@ class Transaction implements ITransactionInsertPayload {
 
     private modifyDate(date: string): string {
         const [DD, MM, YYYY] = new Date(date)?.toLocaleDateString()?.split("/");
-        return `${YYYY}-${MM}-${DD}`;
+        return `${YYYY}-${MM.padStart(2, '0')}-${DD}`;
     }
 }

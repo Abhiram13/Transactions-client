@@ -2,10 +2,11 @@ import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef } from '@angu
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { TransactionService } from '../../../services/export.service';
-import { IApiResonse, StatusCode, IListByDate } from "../../../types/export.types";
+import { IApiResonse, StatusCode, TransactionNS } from "../../../types/export.types";
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FooterService } from '../../../services/footer.service';
 
 @Component({
     selector: 'dashboard',
@@ -19,7 +20,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     error: boolean = false;
     message: string = "";
     private subscription: Subscription = new Subscription();
-    dataSource: IListByDate[] = [
+    dataSource: TransactionNS.IListByDate[] = [
         { date: "2024-08-03", credit: 12.5, debit: 10, count: 10 },
         { date: "2024-08-04", credit: 1.5, debit: 20, count: 20 }
     ];
@@ -30,30 +31,31 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     /**
      * @param TRANSACTION Service that allows to call `transactions` APIs as methods
      */
-    constructor(private readonly TRANSACTION: TransactionService, private readonly ROUTER: Router, private readonly ACTIVEROUTE: ActivatedRoute) { }
+    constructor(private readonly TRANSACTION: TransactionService, private readonly ROUTER: Router, private readonly ACTIVEROUTE: ActivatedRoute, private readonly FOOTER: FooterService) { }
 
     ngOnInit(): void {
         this.fetchTransactions();
     }
 
     private fetchTransactions(): void {
-        this.TRANSACTION.listByDate().subscribe({ next: this.fetchTransactionsSuccess.bind(this), error: this.fetchTransactionsError.bind(this) });
+        this.subscription = this.TRANSACTION.listByDate().subscribe({ next: this.fetchTransactionsSuccess.bind(this), error: this.fetchTransactionsError.bind(this) });
     }
 
-    private fetchTransactionsSuccess(response: IApiResonse<IListByDate[]>): void {
+    private fetchTransactionsSuccess(response: IApiResonse<TransactionNS.IListByDate[]>): void {
         if (response.status_code === StatusCode.OK) {
             this.dataSource = response?.result || [];
             return;
+        } else {
+            this.FOOTER.invoke(response?.message || "Something went wrong", "Dismiss");
         }
     }
 
     private fetchTransactionsError(error: Error): void {
-        this.message = JSON.stringify(error?.message);
-        this.error = true;
+        this.FOOTER.invoke(error?.message || "Something went wrong", "Dismiss");
     }
 
     ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+        this.subscription?.unsubscribe();
     }
 
     toAddView(): void {

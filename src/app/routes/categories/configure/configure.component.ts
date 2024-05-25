@@ -4,6 +4,9 @@ import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { CategoryService } from '../../../services/category.service';
+import { FooterService } from '../../../services/footer.service';
+import { StatusCode } from '../../../types/export.types';
 
 @Component({
     selector: 'category-configure',
@@ -15,7 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 export class CategoryConfigureComponent {
     formGroup!: FormGroup;
 
-    constructor(private readonly BUILDER: FormBuilder) {
+    constructor(private readonly BUILDER: FormBuilder, private readonly SERVICE: CategoryService, private readonly FOOTER: FooterService) {
         this.formGroup = this.BUILDER.group({
             name: ['', [Validators.required]],
         });
@@ -26,6 +29,20 @@ export class CategoryConfigureComponent {
     }
 
     onSubmit(): void {
-        const NAME = this.formGroup.get('name')?.value;
+        try {
+            const NAME = this.formGroup.get('name')?.value;
+
+            this.SERVICE.insert({ name: NAME }).subscribe(response => {
+                if (response.status_code === StatusCode.CREATED) {
+                    this.FOOTER.invoke("Category added successfully", "Dismiss");
+                } else {
+                    this.FOOTER.invoke(response?.message || "Something went wrong", "Dismiss");
+                }
+            }, error => {
+                this.FOOTER.invoke(error?.message || "Something went wrong", "Dismiss");
+            });
+        } catch (e: any) {
+            this.FOOTER.invoke(e?.message || "Something went wrong", "Dismiss");
+        }      
     }
 }
