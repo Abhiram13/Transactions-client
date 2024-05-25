@@ -7,9 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import { CategoryService } from '../../services/category.service';
-import { BankService } from '../../services/bank.service';
-import { ICategoryList, IBankList, StatusCode } from "../../types/export.types";
+import { CategoryService } from '../../../services/category.service';
+import { BankService } from '../../../services/bank.service';
+import { ICategoryList, IBankList, StatusCode } from "../../../types/export.types";
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 enum TransactionType {

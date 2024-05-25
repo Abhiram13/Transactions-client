@@ -1,0 +1,10 @@
+<section style="margin: 30px;">
+    <button mat-flat-button color="primary" (click)="toAddView()">Add</button>
+
+    <mat-list>
+        <ng-container *ngFor="let bank of banks">
+            <mat-list-item>{{bank.name}}</mat-list-item>
+            <mat-divider></mat-divider>
+        </ng-container>
+    </mat-list>
+</section>
