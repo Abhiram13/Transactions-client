@@ -1,11 +1,11 @@
-import { AfterContentInit, Attribute, Component, ContentChild, Directive, ElementRef, HostBinding, HostListener, Injectable } from '@angular/core';
+import { AfterContentInit, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from "../../routes/login/login.component";
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
    selector: 'app-root',
    standalone: true,
-   imports: [RouterOutlet, LoginComponent],
+   imports: [RouterOutlet, FooterComponent],
    templateUrl: './app.component.html',
    styleUrl: './app.component.scss',
    interpolation: ['(', ')']

@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { MatTableModule } from '@angular/material/table';
 import { TransactionService } from '../../services/export.service';
 import { IApiResonse, StatusCode, IListByDate } from "../../types/export.types";
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
+import { FooterService } from '../../services/footer.service';
 
 @Component({
     selector: 'dashboard',
@@ -22,6 +23,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         {date: "2024-08-03", credit: 12.5, debit: 10, count: 10},
         {date: "2024-08-04", credit: 1.5, debit: 20, count: 20}
     ];
+
+    @ViewChild('footer', {read: ViewContainerRef})
+    footer!: ViewContainerRef;
 
     /**
      * @param TRANSACTION Service that allows to call `transactions` APIs as methods
