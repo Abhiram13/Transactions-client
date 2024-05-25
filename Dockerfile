@@ -29,10 +29,12 @@ COPY . /app
 # Run ng build through npm to create dist folder
 RUN npm run build --prod
 
+CMD ["npm", "start"]
+
 # Define nginx for front-end server
-FROM nginx:1.15.8-alpine
+# FROM nginx:1.15.8-alpine
 
-# Copy dist from ng build to nginx html folder
-COPY --from=build /app/dist/Transactions-client/browser /usr/share/nginx/html
+# # Copy dist from ng build to nginx html folder
+# COPY --from=build /app/dist/Transactions-client/browser /usr/share/nginx/html
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
