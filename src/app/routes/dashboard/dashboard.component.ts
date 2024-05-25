@@ -1,52 +1,27 @@
 import { Component } from '@angular/core';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
-
-export interface OrganisationTable {
-   name: string;
-   manager: string;
-   employee_count: number;   
-}
-
-const ELEMENT_DATA: OrganisationTable[] = [
-   { name: 'Hydrogen', manager: "Me", employee_count: 3 },
-];
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { Router } from '@angular/router';
 
 @Component({
-   selector: 'dashboard',
-   standalone: true,
-   imports: [MatTableModule, MatCheckboxModule],
-   templateUrl: './dashboard.component.html',
-   styleUrl: './dashboard.component.scss'
+    selector: 'dashboard',
+    standalone: true,
+    imports: [MatListModule, MatDividerModule],
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-   displayedColumns: string[] = ['select', 'name', 'weight', 'symbol'];
-   dataSource = new MatTableDataSource<OrganisationTable>(ELEMENT_DATA);
-   selection = new SelectionModel<OrganisationTable>(true, []);
+    constructor(private readonly ROUTER: Router) {}
 
-   /** Whether the number of selected elements matches the total number of rows. */
-   isAllSelected() {
-      const numSelected = this.selection.selected.length;
-      const numRows = this.dataSource.data.length;
-      return numSelected === numRows;
-   }
+    toTransactions(): void {
+        this.ROUTER.navigateByUrl("/transactions");
+    }
 
-   /** Selects all rows if they are not all selected; otherwise clear selection. */
-   toggleAllRows() {
-      if (this.isAllSelected()) {
-         this.selection.clear();
-         return;
-      }
+    toCategories(): void {
+        this.ROUTER.navigateByUrl("/categories");
+    }
 
-      this.selection.select(...this.dataSource.data);
-   }
-
-   /** The label for the checkbox on the passed row */
-   checkboxLabel(row?: OrganisationTable): string {
-      if (!row) {
-         return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-      }
-      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
-   }
+    toBanks(): void {
+        this.ROUTER.navigateByUrl("/banks");
+    }
 }

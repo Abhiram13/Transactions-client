@@ -1,0 +1,12 @@
+<section id="category-form-section">
+   <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+         <mat-label>Category</mat-label>
+         <input matInput [formControl]="name">
+         <mat-error *ngIf="name?.errors?.['required']">Category is required</mat-error>
+         <mat-error *ngIf="name?.errors?.['pattern']">Category contains invalid characters</mat-error>
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="submit">Add</button>
+   </form>
+</section>

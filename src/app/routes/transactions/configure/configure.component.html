@@ -1,0 +1,79 @@
+<section id="form-section">
+    <h1>Add Transaction</h1>
+    <form id="form-group" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <!-- Amount Field -->
+        <mat-form-field>
+            <mat-label>Amount</mat-label>
+            <input matInput [formControl]="amount">
+            <mat-error *ngIf="amount?.errors?.['required']">Amount is required</mat-error>
+            <mat-error *ngIf="amount?.errors?.['pattern']">Amount contains invalid characters</mat-error>
+        </mat-form-field>
+        <!-- Amount Field -->
+
+        <!-- Transaction Type Field -->
+        <mat-form-field>
+            <mat-label>Transaction type</mat-label>
+            <mat-select [formControl]="type">
+                <mat-option value="1">Debit</mat-option>
+                <mat-option value="2">Credit</mat-option>
+                <mat-option value="3">Partial Debit</mat-option>
+                <mat-option value="4">Partial Credit</mat-option>
+            </mat-select>
+            <mat-error *ngIf="type?.errors?.['required']">Select atleast one Transaction type</mat-error>
+        </mat-form-field>
+        <!-- Transaction Type Field -->
+
+        <!-- Description Field -->
+        <mat-form-field style="height: 80px;">
+            <mat-label>Description</mat-label>
+            <textarea matInput [formControl]="description"></textarea>
+            <mat-error *ngIf="description?.errors?.['required']">Description is required</mat-error>
+            <mat-error *ngIf="description?.errors?.['pattern']">Description contains invalid characters</mat-error>
+        </mat-form-field>
+        <!-- Description Field -->
+
+        <!-- From bank Field -->
+        <mat-form-field>
+            <mat-label>From bank</mat-label>
+            <mat-select [formControl]="from_bank">
+                <mat-option *ngFor="let bank of banks" value="{{bank._id}}">{{bank.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- From bank Field -->
+
+        <!-- To bank Field -->
+        <mat-form-field>
+            <mat-label>To bank</mat-label>
+            <mat-select [formControl]="to_bank">
+                <mat-option *ngFor="let bank of banks" value="{{bank._id}}">{{bank.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- To bank Field -->
+
+        <!-- Category Field -->
+        <mat-form-field>
+            <mat-label>Category</mat-label>
+            <mat-select [formControl]="category_id">
+                <mat-option *ngFor="let category of categories" value="{{category._id}}">{{category.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="category_id?.errors?.['required']">Category is required</mat-error>
+        </mat-form-field>
+        <!-- Category Field -->
+
+        <!-- Date Field -->
+        <mat-form-field>
+            <mat-label>Transaction date</mat-label>
+            <input matInput [matDatepicker]="picker" [formControl]="date" [max]="todayDate">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <!-- Date Field -->
+
+        <!-- Due Field -->
+        <mat-slide-toggle [formControl]="due">Due</mat-slide-toggle>
+        <!-- Due Field -->
+
+        <button mat-flat-button color="primary" type="submit">Add</button>
+    </form>
+</section>

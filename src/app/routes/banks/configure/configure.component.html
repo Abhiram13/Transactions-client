@@ -1,0 +1,12 @@
+<section id="category-form-section">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <mat-label>Bank</mat-label>
+            <input matInput [formControl]="name">
+            <mat-error *ngIf="name?.errors?.['required']">Bank name is required</mat-error>
+            <mat-error *ngIf="name?.errors?.['pattern']">Bank name contains invalid characters</mat-error>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit">Add</button>
+    </form>
+</section>
