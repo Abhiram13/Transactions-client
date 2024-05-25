@@ -1,5 +1,6 @@
 #form-section {
-    margin: 20px 0;
+    margin: 30px auto;
+    width: 60%;
 
     form#form-group {
         display: grid;
@@ -7,16 +8,17 @@
         gap: 30px;
         grid-template-rows: 80px 80px;
         align-items: center;
-        width: 60%;
+        width: 100%;
         margin: 30px auto;
     }
 }
 
 @media only screen and (max-width: 500px) {
     #form-section {
+        width: 75%;
+
         form#form-group {
             grid-template-columns: auto;
-            width: 75%;
         }
     }    
 }

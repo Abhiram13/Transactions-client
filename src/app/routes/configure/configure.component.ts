@@ -45,14 +45,14 @@ export class ConfigureComponent implements OnInit {
 
     constructor (private readonly BUILDER: FormBuilder, private readonly CATGEORY: CategoryService, private readonly BANK: BankService) {
         this.formGroup = this.BUILDER.group({
-            amount: [0, [Validators.required, Validators.pattern(/^[0-9]/)]],
-            type: [TransactionType.Debit, [Validators.required]],
+            amount: ['', [Validators.required, Validators.pattern(/^[0-9]/)]],
+            type: ['', [Validators.required]],
             description: ['', [Validators.required]],
             date: [new Date(), [Validators.required]],
             due: [false],
             from_bank: [''],
             to_bank: [''],
-            category_id: ['']
+            category_id: ['', [Validators.required]]
         });
     }
 
