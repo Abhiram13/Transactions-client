@@ -42,6 +42,7 @@ export class ConfigureComponent implements OnInit {
     formGroup!: FormGroup;
     banks: IBankList[] = [];
     categories: ICategoryList[] = [];
+    todayDate: Date = new Date();
 
     constructor (private readonly BUILDER: FormBuilder, private readonly CATGEORY: CategoryService, private readonly BANK: BankService) {
         this.formGroup = this.BUILDER.group({
