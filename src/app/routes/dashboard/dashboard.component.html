@@ -1,7 +1,7 @@
 <section *ngIf="!error" style="margin-top: 10px;">
     <div class="d-flex" style="margin: auto; width: 90vw; justify-content: space-between; align-items: center;">
         <h4 style="margin: 0;">Total transactions: 10</h4>
-        <button mat-flat-button color="primary">Add</button>
+        <button mat-flat-button color="primary" (click)="toAddView()">Add</button>
     </div>
 
     <section class="d-flex" style="margin: auto; width: 90vw; margin-top: 10px;">

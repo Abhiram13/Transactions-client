@@ -5,7 +5,7 @@ import { TransactionService } from '../../services/export.service';
 import { IApiResonse, StatusCode, IListByDate } from "../../types/export.types";
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
-import { FooterService } from '../../services/footer.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'dashboard',
@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     /**
      * @param TRANSACTION Service that allows to call `transactions` APIs as methods
      */
-    constructor(private readonly TRANSACTION: TransactionService) { }
+    constructor(private readonly TRANSACTION: TransactionService, private readonly ROUTER: Router) { }
 
     ngOnInit(): void {
         this.fetchTransactions();
@@ -54,5 +54,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
+    }
+
+    toAddView(): void {
+        this.ROUTER.navigateByUrl('/add');
     }
 }
