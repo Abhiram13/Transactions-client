@@ -7,7 +7,7 @@ FROM $node as build
 WORKDIR /app
 
 # Copy package*.json for npm install
-COPY package*.json .
+COPY package*.json ./
 
 # Run npm install @angular/cli
 RUN npm install -g @angular/cli@17.2.0
