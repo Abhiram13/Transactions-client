@@ -3,7 +3,19 @@
 
    <mat-list>
       <ng-container *ngFor="let category of categories">
-         <mat-list-item>{{category.name}}</mat-list-item>
+         <mat-list-item>
+            <div style="display: grid; grid-template-columns: 80% 20%;">
+               <span>{{category.name}}</span>
+               <div style="display: flex; justify-content: space-between;">
+                  <div (click)="toEditView(category._id)">
+                     <mat-icon>edit</mat-icon>
+                  </div>
+                  <div (click)="openDialog(category._id)">
+                     <mat-icon>delete</mat-icon>
+                  </div>
+               </div>
+            </div>
+         </mat-list-item>
          <mat-divider></mat-divider>
       </ng-container>
    </mat-list>

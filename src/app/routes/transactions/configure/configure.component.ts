@@ -42,13 +42,13 @@ export class ConfigureComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.BANK.list().subscribe(response => {
+        this.BANK.list<BankNS.IList[]>().subscribe(response => {
             if (response.status_code === StatusCode.OK) {
                 this.banks = response?.result || [];
             }
         });
 
-        this.CATGEORY.list().subscribe(response => {
+        this.CATGEORY.list<CategoryNS.IList[]>().subscribe(response => {
             if (response.status_code === StatusCode.OK) {
                 this.categories = response?.result || [];
             }

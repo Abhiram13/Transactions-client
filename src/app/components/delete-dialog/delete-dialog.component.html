@@ -1,0 +1,5 @@
+<mat-dialog-content>Are you sure you want to delete this?</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="close('No')">No</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="close('Yes')">Yes</button>
+</mat-dialog-actions>
