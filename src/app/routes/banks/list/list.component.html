@@ -3,7 +3,19 @@
 
     <mat-list>
         <ng-container *ngFor="let bank of banks">
-            <mat-list-item>{{bank.name}}</mat-list-item>
+            <mat-list-item class="pointer">
+                <div style="display: grid; grid-template-columns: 80% 20%;">
+                    <span>{{bank.name}}</span>                    
+                    <div style="display: flex; justify-content: space-between;">
+                        <div (click)="toEditView(bank._id)">
+                            <mat-icon>edit</mat-icon>
+                        </div>                        
+                        <div (click)="openDialog(bank._id)">
+                            <mat-icon>delete</mat-icon>
+                        </div>                        
+                    </div>
+                </div>                
+            </mat-list-item>
             <mat-divider></mat-divider>
         </ng-container>
     </mat-list>
