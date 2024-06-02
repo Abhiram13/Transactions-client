@@ -6,12 +6,14 @@ import { CategoryListComponent } from './routes/categories/list/list.component';
 import { CategoryConfigureComponent, EditCategoryComponent } from './routes/categories/configure/configure.component';
 import { BankListComponent } from './routes/banks/list/list.component';
 import { BankAddComponent, BankEditComponent } from './routes/banks/configure/configure.component';
+import { ByDateComponent } from './routes/transactions/by-date/by-date.component';
 
 export const routes: Routes = [
     { path: "", component: DashboardComponent },
     { path: "transactions", children: [
         { path: "", component: TransactionListComponent },
-        { path: "add", component: ConfigureComponent}
+        { path: "add", component: ConfigureComponent},
+        { path: ":date", component: ByDateComponent}
     ]},
     { path: "categories", children: [
         { path: "", component: CategoryListComponent },

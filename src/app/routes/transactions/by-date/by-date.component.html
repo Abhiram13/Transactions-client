@@ -1,0 +1,5 @@
+<section id="by-date">
+    <div *ngFor="let transaction of list.transactions" class="d-flex list" attr.id="{{fetchColor(transaction.type)}}">
+        <p>{{transaction.description}}</p>
+        <p>{{transaction.amount}}</p>
+    </div>

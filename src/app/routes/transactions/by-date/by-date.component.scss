@@ -1,0 +1,31 @@
+#by-date {
+    .list {
+        justify-content: space-between;
+        width: 80%;
+        margin: auto;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 20px;
+        border: 1px solid;
+
+        & p {
+            margin: 0;
+        }
+    }
+
+    #debit {
+        border-color: #fe4d03;
+    }
+
+    #credit {
+        border-color: #05d245;
+    }
+
+    #partial-debit {
+        border-color: #f0b505;
+    }
+
+    #partial-credit {
+        border-color: #05e2f0;
+    }
+}

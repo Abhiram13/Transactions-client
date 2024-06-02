@@ -9,6 +9,7 @@ export class HttpService {
 
     constructor(private http: HttpClient) {
         this.API = "https://budget-tracker-dotnet-edu262f3lq-uc.a.run.app";
+        // this.API = "http://192.168.0.123:3002"
     }
 
     /**

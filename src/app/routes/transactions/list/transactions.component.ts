@@ -20,7 +20,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     error: boolean = false;
     message: string = "";
     private subscription: Subscription = new Subscription();
-    dataSource: TransactionNS.IListByDate[] = [
+    dataSource: TransactionNS.IList[] = [
         { date: "2024-08-03", credit: 12.5, debit: 10, count: 10 },
         { date: "2024-08-04", credit: 1.5, debit: 20, count: 20 }
     ];
@@ -38,10 +38,10 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     }
 
     private fetchTransactions(): void {
-        this.subscription = this.TRANSACTION.listByDate().subscribe({ next: this.fetchTransactionsSuccess.bind(this), error: this.fetchTransactionsError.bind(this) });
+        this.subscription = this.TRANSACTION.list<TransactionNS.IList[]>().subscribe({ next: this.fetchTransactionsSuccess.bind(this), error: this.fetchTransactionsError.bind(this) });
     }
 
-    private fetchTransactionsSuccess(response: IApiResonse<TransactionNS.IListByDate[]>): void {
+    private fetchTransactionsSuccess(response: IApiResonse<TransactionNS.IList[]>): void {
         if (response.status_code === StatusCode.OK) {
             this.dataSource = response?.result || [];
             return;
@@ -52,6 +52,10 @@ export class TransactionListComponent implements OnInit, OnDestroy {
 
     private fetchTransactionsError(error: Error): void {
         this.FOOTER.invoke(error?.message || "Something went wrong", "Dismiss");
+    }
+
+    toDateView(date: string): void {
+        this.ROUTER.navigate([date], {relativeTo: this.ACTIVEROUTE});
     }
 
     ngOnDestroy(): void {
