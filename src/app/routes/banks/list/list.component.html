@@ -7,10 +7,10 @@
                 <div style="display: grid; grid-template-columns: 80% 20%;">
                     <span>{{bank.name}}</span>                    
                     <div style="display: flex; justify-content: space-between;">
-                        <div (click)="toEditView(bank._id)">
+                        <div (click)="toEditView(bank.id)">
                             <mat-icon>edit</mat-icon>
                         </div>                        
-                        <div (click)="openDialog(bank._id)">
+                        <div (click)="openDialog(bank.id)">
                             <mat-icon>delete</mat-icon>
                         </div>                        
                     </div>

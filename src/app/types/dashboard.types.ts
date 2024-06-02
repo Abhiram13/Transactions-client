@@ -4,11 +4,26 @@ export namespace TransactionNS {
     * Used in list by date transactions API which provides list of transactions by date wise along with values
     * like **debit**, **credit**, **date of transaction** and **count** (no of transactions).
     */
-    export interface IListByDate {
+    export interface IList {
         debit: number;
         credit: number;
         date: string;
         count: number;
+    }
+
+    export interface ITransactionByDate {
+        id: string;
+        amount: number;
+        description: string;
+        type: TransactionType;
+    }
+
+    export interface IDataByDate {
+        debit: number;
+        credit: number;
+        partial_debit: number;
+        partial_credit: number;
+        transactions: ITransactionByDate[];
     }
 
     export interface IListParams {
@@ -36,7 +51,7 @@ export namespace TransactionNS {
 
 export namespace BankNS {
     export interface IList {
-        _id: string;
+        id: string;
         name: string;
     }
 
@@ -47,7 +62,7 @@ export namespace BankNS {
 
 export namespace CategoryNS {
     export interface IList {
-        _id: string;
+        id: string;
         name: string;
     }
 
