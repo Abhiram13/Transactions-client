@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IApiResonse } from "../types/export.types";
 
+/**
+ * Service resposible for making HTTP calls with single method functions
+ */
 @Injectable({ providedIn: 'root' })
 export class HttpService {
     private readonly API: string;
@@ -38,11 +41,7 @@ export class HttpService {
         return this.http.delete<IApiResonse>(`${this.API}${url}`);
     }
 
-    searchById<R extends {}>(url: string): Observable<IApiResonse<R>> {
-        return this.http.get<IApiResonse<R>>(`${this.API}${url}`);
-    }
-
-    update(url: string, body: any): Observable<IApiResonse> {
+    update<R extends {}>(url: string, body: R): Observable<IApiResonse> {
         return this.http.patch<IApiResonse>(`${this.API}${url}`, body);
     }
 }

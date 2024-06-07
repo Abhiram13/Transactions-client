@@ -20,10 +20,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     error: boolean = false;
     message: string = "";
     private subscription: Subscription = new Subscription();
-    dataSource: TransactionNS.IList[] = [
-        { date: "2024-08-03", credit: 12.5, debit: 10, count: 10 },
-        { date: "2024-08-04", credit: 1.5, debit: 20, count: 20 }
-    ];
+    dataSource: TransactionNS.IList[] = [];
 
     @ViewChild('footer', { read: ViewContainerRef })
     footer!: ViewContainerRef;
