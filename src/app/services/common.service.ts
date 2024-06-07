@@ -32,10 +32,10 @@ export class ComponentService implements IComponentService {
     }
 
     searchById<Result extends object>(id: string): Observable<IApiResonse<Result>> {
-        return this.HTTP.searchById(this.PREFIX + '/' + id);
+        return this.HTTP.get(this.PREFIX + '/' + id);
     }
 
-    update<Payload>(id: string, body: Payload): Observable<IApiResonse<{}>> {
-        return this.HTTP.update(this.PREFIX + '/' + id, body);
+    update<Payload extends {}>(id: string, body: Payload): Observable<IApiResonse<{}>> {
+        return this.HTTP.update<Payload>(this.PREFIX + '/' + id, body);
     }
 }

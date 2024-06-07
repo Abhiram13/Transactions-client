@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TransactionService } from '../../../services/transactions.service';
 import { TransactionNS } from '../../../types/dashboard.types';
 import { StatusCode } from '../../../types/enums.types';

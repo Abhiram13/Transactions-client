@@ -12,5 +12,5 @@ export interface IComponentService {
    insert<Payload>(payload: Payload): Observable<IApiResonse>;
    delete(id: string): Observable<IApiResonse>;
    searchById<Result extends object>(id: string): Observable<IApiResonse<Result>>;
-   update<Payload>(id: string, body: Payload): Observable<IApiResonse>;
+   update<Payload extends {}>(id: string, body: Payload): Observable<IApiResonse>;
 }

@@ -154,6 +154,6 @@ class Transaction implements TransactionNS.ITransactionInsertPayload {
 
     private modifyDate(date: string): string {
         const [DD, MM, YYYY] = new Date(date)?.toLocaleDateString()?.split("/");
-        return `${YYYY}-${MM.padStart(2, '0')}-${DD}`;
+        return `${YYYY}-${MM.padStart(2, '0')}-${DD.padStart(2, '0')}`;
     }
 }
