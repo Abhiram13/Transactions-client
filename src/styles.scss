@@ -8,6 +8,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
    display: flex;
 }
 
+.d-grid {
+   display: grid;
+}
+
+.w-100 {
+   width: 100% !important;
+}
+
+.flex-row {
+   flex-direction: row !important;
+}
+
+.flex-col {
+   flex-direction: column !important;
+}
+
 .pointer {
    cursor: pointer !important;
 }

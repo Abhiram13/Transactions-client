@@ -1,31 +1,74 @@
+$debit: #fe4d03;
+$credit: #05d245;
+$partial-credit: #05e2f0;
+$partial-debit: #f0b505;
+
 #by-date {
     .list {
         justify-content: space-between;
         width: 80%;
         margin: auto;
         border-radius: 5px;
-        padding: 10px;
+        padding: 15px;
         margin-top: 20px;
-        border: 1px solid;
+        box-shadow: 0 3px 22px -8px rgba(0, 0, 0, 0.54);
+        grid-template-columns: 75% 25%;
 
         & p {
-            margin: 0;
+            margin: 0;            
+        }
+
+        & p#details-text {
+            line-height: 23px;
+            letter-spacing: 0.6px;
+        }
+
+        & #details-block {
+            & p:nth-of-type(1) {
+                font-size: 16px;
+                width: 80%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            & p:not(:nth-of-type(1)) {
+                color: rgb(144, 144, 144);
+                font-size: 13px;                
+            }
+        }
+
+        #amount-block {
+            align-items: center;
+            width: 100%;
+            justify-content: end;
+
+            & p {
+                font-size: 20px;
+                margin-left: 5px;
+            }
+
+            & span {
+                width: 6px; 
+                height: 6px; 
+                border-radius: 10px;
+            }
         }
     }
 
-    #debit {
-        border-color: #fe4d03;
+    .debit {
+        color: $debit;
     }
 
-    #credit {
-        border-color: #05d245;
+    .credit {
+        color: $credit;
     }
 
-    #partial-debit {
-        border-color: #f0b505;
+    .partial-debit {
+        color: $partial-debit;
     }
 
-    #partial-credit {
-        border-color: #05e2f0;
+    .partial-credit {
+        color: $partial-credit;
     }
 }

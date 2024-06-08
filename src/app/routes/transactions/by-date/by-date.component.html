@@ -1,5 +1,19 @@
 <section id="by-date">
-    <div *ngFor="let transaction of list.transactions" class="d-flex list" attr.id="{{fetchColor(transaction.type)}}">
-        <p>{{transaction.description}}</p>
-        <p>{{transaction.amount}}</p>
+    <div *ngFor="let transaction of list.transactions" class="d-grid list">
+        <div id="details-block">
+            <p id="details-text">{{transaction.description}}</p>
+            <p id="details-text">From: {{transaction.from_bank || '---'}}</p>
+            <p id="details-text">To: {{transaction.to_bank || '---'}}</p>
+            <p id="details-text">Category: {{transaction.category}}</p>
+        </div>
+        <div class="w-100">
+            <div class="d-flex flex-row" id="amount-block">
+                <span attr.id="{{fetchColor(transaction.type)}}"></span>
+                <p>₹{{transaction.amount}}</p>
+            </div>
+            <p *ngIf="transaction.type === 1" id="details-text" class="debit" style="font-size: 11px; text-align: end;">Debit</p>
+            <p *ngIf="transaction.type === 2" id="details-text" class="credit" style="font-size: 11px; text-align: end;">Credit</p>
+            <p *ngIf="transaction.type === 3" id="details-text" class="partial-debit" style="font-size: 11px; text-align: end;">Partial Debit</p>
+            <p *ngIf="transaction.type === 4" id="details-text" class="partial-credit" style="font-size: 11px; text-align: end;">Partial Credit</p>
+        </div>        
     </div>
