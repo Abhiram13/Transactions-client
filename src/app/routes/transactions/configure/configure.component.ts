@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -28,7 +28,16 @@ export class ConfigureComponent implements OnInit {
     categories: CategoryNS.IList[] = [];
     todayDate: Date = new Date();
 
-    constructor (private readonly BUILDER: FormBuilder, private readonly SERVICE: TransactionService, private readonly CATGEORY: CategoryService, private readonly BANK: BankService, private readonly FOOTER: FooterService) {
+    @ViewChild("formDirective")
+    formDirective!: FormGroupDirective;
+
+    constructor (
+        private readonly BUILDER: FormBuilder, 
+        private readonly SERVICE: TransactionService, 
+        private readonly CATGEORY: CategoryService, 
+        private readonly BANK: BankService, 
+        private readonly FOOTER: FooterService
+    ) {
         this.formGroup = this.BUILDER.group({
             amount: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,4})?$/)]],
             type: ['', [Validators.required]],
@@ -119,6 +128,8 @@ export class ConfigureComponent implements OnInit {
             this.SERVICE.insert(TRANSACTION).subscribe(response => {
                 if (response?.status_code === StatusCode.CREATED) {
                     this.FOOTER.invoke("Transaction inserted successfully", "Dismiss");
+                    this.formDirective.resetForm();
+                    this.formGroup.reset();
                 } else {
                     this.FOOTER.invoke(response?.message || "Something went wrong", "Dismiss");
                 }

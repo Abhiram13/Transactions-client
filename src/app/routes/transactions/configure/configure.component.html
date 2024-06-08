@@ -1,6 +1,6 @@
 <section id="form-section">
     <h1>Add Transaction</h1>
-    <form id="form-group" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <form id="form-group" [formGroup]="formGroup" #formDirective="ngForm" (ngSubmit)="onSubmit()">
         <!-- Amount Field -->
         <mat-form-field>
             <mat-label>Amount</mat-label>

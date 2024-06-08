@@ -17,6 +17,9 @@ export namespace TransactionNS {
         amount: number;
         description: string;
         type: TransactionType;
+        from_bank: string | null;
+        to_bank: string | null;
+        category: string;
     }
 
     export interface IDataByDate {
