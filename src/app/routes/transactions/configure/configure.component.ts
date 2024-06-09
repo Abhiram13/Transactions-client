@@ -154,12 +154,12 @@ class Transaction implements TransactionNS.ITransactionInsertPayload {
 
     constructor(amount: string, category: string, date: string, description: string, due: boolean, fromBank: string, toBank: string, type: TransactionNS.TransactionType) {
         this.amount = parseFloat(amount);
-        this.category_id = category;
-        this.description = description;
-        this.due = due;
-        this.from_bank = fromBank;
-        this.to_bank = toBank;
-        this.type = Number(type);
+        this.category_id = category || "";
+        this.description = description || "";
+        this.due = !!due;
+        this.from_bank = fromBank || "";
+        this.to_bank = toBank || "";
+        this.type = Number(type) || TransactionNS.TransactionType.Debit;
         this.date = this.modifyDate(date);
     }
 
