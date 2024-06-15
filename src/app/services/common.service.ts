@@ -14,6 +14,7 @@ export function CreateParams<T extends object>(object?: T): HttpParams {
 }
 
 /**
+ * @Injectable
  * Common service used as extension for other base classes that need to perform CRUD operations
  */
 @Injectable({ providedIn: 'root' })

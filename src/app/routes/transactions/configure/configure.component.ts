@@ -1,35 +1,33 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { provideNativeDateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CategoryService } from '../../../services/category.service';
 import { BankService } from '../../../services/bank.service';
-import { CategoryNS, BankNS, StatusCode, TransactionNS } from "../../../types/export.types";
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CategoryNS, BankNS, StatusCode, TransactionNS, DueNS } from "../../../types/export.types";
 import { FooterService } from '../../../services/footer.service';
 import { TransactionService } from '../../../services/transactions.service';
+import { DueConfigureComponent } from './due-configure/due-configure.component';
+import { MatFieldDirective } from '../../../directives/directives';
+import { FormModule } from '../../../modules/form.module';
 
 @Component({
     selector: 'app-configure',
     standalone: true,
-    providers: [provideNativeDateAdapter(), {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}],
-    imports: [MatInputModule, MatSelectModule, MatFormFieldModule, ReactiveFormsModule, MatButtonModule, CommonModule, MatDatepickerModule, MatSlideToggleModule],
+    providers: [provideNativeDateAdapter(), {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}, TransactionService],
+    imports: [FormModule, CommonModule, DueConfigureComponent, MatFieldDirective],
     templateUrl: './configure.component.html',
-    styleUrl: './configure.component.scss'
+    styleUrl: './configure.component.scss',    
 })
 export class ConfigureComponent implements OnInit {
-    formGroup!: FormGroup;
-    banks: BankNS.IList[] = [];
-    categories: CategoryNS.IList[] = [];
-    todayDate: Date = new Date();
+    public formGroup!: FormGroup;
+    public banks: BankNS.IList[] = [];
+    public categories: CategoryNS.IList[] = [];
+    public todayDate: Date = new Date();
+    public isSubmitTriggered: boolean = false;
 
     @ViewChild("formDirective")
-    formDirective!: FormGroupDirective;
+    public formDirective!: FormGroupDirective;
 
     constructor (
         private readonly BUILDER: FormBuilder, 
@@ -46,7 +44,7 @@ export class ConfigureComponent implements OnInit {
             due: [false],
             from_bank: [''],
             to_bank: [''],
-            category_id: ['', [Validators.required]]
+            category_id: ['', [Validators.required]],            
         });
     }
 
@@ -108,6 +106,8 @@ export class ConfigureComponent implements OnInit {
             Boolean(CONTROL?.['category_id']?.errors);
     }
 
+    public submitDue(payload: DueNS.IPayload): void { }
+
     onSubmit(): void {
         try {
             const AMOUNT = this.formGroup.get('amount')?.value;
@@ -120,10 +120,12 @@ export class ConfigureComponent implements OnInit {
             const DUE = this.formGroup.get('due')?.value;
             const TRANSACTION = new Transaction(AMOUNT, CATEGORYID, DATE, DESCRIPTION, DUE, FROMBANK, TOBANK, TYPE);
 
+            // this.isSubmitTriggered = true;
             if (this.isFormInValid()) {
                 this.FOOTER.invoke("Provide valid details", "Dismiss");
                 return;
             }
+
 
             this.SERVICE.insert(TRANSACTION).subscribe(response => {
                 if (response?.status_code === StatusCode.CREATED) {

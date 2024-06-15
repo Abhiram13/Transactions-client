@@ -74,3 +74,19 @@ export namespace CategoryNS {
         name: string;
     }
 }
+
+export namespace DueNS {
+    export enum DueStatus {
+        Completed = 1,
+        Pending = 2
+    }
+
+    export interface IPayload {
+        from: string;
+        to: string;
+        transaction_id: string;
+        status: DueStatus;
+        total_amount: number;
+        due_amount: number;
+    }
+}

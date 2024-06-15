@@ -5,7 +5,7 @@ import { IApiResonse, TransactionNS, IComponentService } from "../types/export.t
 import { Injectable } from "@angular/core";
 import { ComponentService } from "./export.service";
 
-@Injectable({providedIn: 'root'})
+@Injectable({providedIn: 'any'})
 export class TransactionService extends ComponentService implements IComponentService {
     protected override readonly PREFIX: string = "/transactions";
 

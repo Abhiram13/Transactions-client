@@ -1,0 +1,21 @@
+<form id="form-group" [formGroup]="dueFormGroup" #formDirective="ngForm">
+    <!-- From Field -->
+    <mat-form-field style="height: 80px;">
+        <mat-label>From</mat-label>
+        <input matInput [formControl]="from">
+        <mat-error *ngIf="from.errors?.['required']">Description is required</mat-error>
+        <mat-error *ngIf="from.errors?.['pattern']">Description contains invalid characters</mat-error>
+    </mat-form-field>
+    <!-- From Field -->
+
+    <!-- Due status Field -->
+    <mat-form-field>
+        <mat-label>Due status</mat-label>
+        <mat-select [formControl]="due_status">
+            <mat-option value="1">Completed</mat-option>
+            <mat-option value="2">Pending</mat-option>
+        </mat-select>
+        <mat-error *ngIf="due_status?.errors?.['required']">Select atleast one Transaction type</mat-error>
+    </mat-form-field>
+    <!-- Due status Field -->
+</form>

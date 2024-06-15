@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "./colors.scss";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -26,4 +27,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .pointer {
    cursor: pointer !important;
+}
+
+/* Light mode */
+@media (prefers-color-scheme: light) {
+   body, table, section {
+      background-color: $light-bg;
+   }
+
+   span, p, h1, h2, h3, h4, h5, h6, tr, th, td {
+      color: black !important;
+   }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+   body, table, section {
+      background-color: $dark-bg !important;      
+   }
+
+   span, p, h1, h2, h3, h4, h5, h6, tr, th, td {
+      color: $light-txt !important;
+   }
+}
+
+button span {
+   color: $light-txt !important;
 }

@@ -1,11 +1,12 @@
 import { AfterContentInit, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from '../footer/footer.component';
+import { AppDirective } from '../../directives/directives';
 
 @Component({
-   selector: 'app-root',
+   selector: 'root',
    standalone: true,
-   imports: [RouterOutlet, FooterComponent],
+   imports: [RouterOutlet, FooterComponent, AppDirective],
    templateUrl: './app.component.html',
    styleUrl: './app.component.scss',
    interpolation: ['(', ')']

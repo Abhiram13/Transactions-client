@@ -21,7 +21,7 @@ export class HttpService {
      * @template T represents the type of response object within `IApiResponse` interface
      * @returns {Observable<IApiResonse<T>>}
      */
-    get<T extends object>(url: string, params?: HttpParams): Observable<IApiResonse<T>> {        
+    get<T extends object>(url: string, params?: HttpParams): Observable<IApiResonse<T>> {
         return this.http.get<IApiResonse<T>>(`${this.API}${url}`, {params});
     }
 
