@@ -3,7 +3,7 @@ import { IComponentService } from "../types/export.types";
 import { Injectable } from "@angular/core";
 import { ComponentService } from "./export.service";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'any' })
 export class BankService extends ComponentService implements IComponentService {
     protected override readonly PREFIX: string = "/bank";
 

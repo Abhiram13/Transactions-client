@@ -46,7 +46,8 @@ export class CategoryConfigureComponent extends ConfigureComponent<CategoryServi
     standalone: true,
     imports: [MatInputModule, MatFormFieldModule, ReactiveFormsModule, CommonModule, MatButtonModule],
     templateUrl: './configure.component.html',
-    styleUrl: './configure.component.scss'
+    styleUrl: './configure.component.scss',
+    
 })
 export class EditCategoryComponent extends ConfigureComponent<CategoryService> {
     public override formGroup!: FormGroup;

@@ -2,9 +2,9 @@
     <h1>Add Transaction</h1>
     <form id="form-group" [formGroup]="formGroup" #formDirective="ngForm" (ngSubmit)="onSubmit()">
         <!-- Amount Field -->
-        <mat-form-field>
+        <mat-form-field matField>
             <mat-label>Amount</mat-label>
-            <input matInput [formControl]="amount">
+            <input myInput matInput [formControl]="amount">
             <mat-error *ngIf="amount?.errors?.['required']">Amount is required</mat-error>
             <mat-error *ngIf="amount?.errors?.['pattern']">Amount contains invalid characters</mat-error>
         </mat-form-field>
@@ -75,6 +75,10 @@
         <!-- Due Field -->
         <mat-slide-toggle [formControl]="due">Due</mat-slide-toggle>
         <!-- Due Field -->
+
+        <!-- Due Component -->
+        <!-- <due-configure [isSubmitTriggered]="isSubmitTriggered" (duePayload)="submitDue($event)"></due-configure> -->
+        <!-- Due Component -->
 
         <button mat-flat-button color="primary" type="submit">Add</button>
     </form>

@@ -7,23 +7,24 @@ import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FooterService } from '../../../services/footer.service';
+import { AppDirective, MarginDirective, TextDirective } from '../../../directives/directives';
 
 @Component({
     selector: 'dashboard',
     standalone: true,
-    imports: [MatTableModule, MatButtonModule, CommonModule],
+    imports: [MatTableModule, MatButtonModule, CommonModule, MarginDirective, TextDirective, AppDirective],
     templateUrl: './transactions.component.html',
     styleUrl: './transactions.component.scss'
 })
 export class TransactionListComponent implements OnInit, OnDestroy {
-    columns: string[] = ['date', 'debit', 'credit', 'count'];
-    error: boolean = false;
-    message: string = "";
-    private subscription: Subscription = new Subscription();
-    dataSource: TransactionNS.IList[] = [];
+    public columns: string[] = ['date', 'debit', 'credit', 'count'];
+    public error: boolean = false;
+    public message: string = "";
+    public dataSource: TransactionNS.IList[] = [];
+    private subscription: Subscription = new Subscription();    
 
     @ViewChild('footer', { read: ViewContainerRef })
-    footer!: ViewContainerRef;
+    public footer!: ViewContainerRef;
 
     /**
      * @param TRANSACTION Service that allows to call `transactions` APIs as methods

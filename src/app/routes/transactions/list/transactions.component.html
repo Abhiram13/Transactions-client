@@ -1,11 +1,11 @@
-<section *ngIf="!error" style="margin-top: 10px;">
-    <div class="d-flex" style="margin: auto; width: 90vw; justify-content: space-between; align-items: center;">
+<section id="transaction-list" *ngIf="!error" [margin]="'10px 0 0 0'">
+    <div class="d-flex" [margin]="'auto'" style="width: 90vw; justify-content: space-between; align-items: center;">
         <h4 style="margin: 0;">Total transactions: 10</h4>
         <button mat-flat-button color="primary" (click)="toAddView()">Add</button>
     </div>
 
-    <section class="d-flex" style="margin: auto; width: 90vw; margin-top: 10px;">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <section class="d-flex" [margin]="'10px auto auto auto'" style="width: 90vw;">
+        <table [margin]="'0 0 25px 0'" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <!-- Date Column -->
             <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef>Date</th>
@@ -37,5 +37,3 @@
 </section>
 
 <h5 *ngIf="error">Something went wrong!! {{message}}</h5>
-
-<!-- <div class="footer" #footer></div> -->

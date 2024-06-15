@@ -1,7 +1,4 @@
-$debit: #fe4d03;
-$credit: #05d245;
-$partial-credit: #05e2f0;
-$partial-debit: #f0b505;
+@import "../../../../colors.scss";
 
 #by-date {
     .list {
@@ -11,7 +8,7 @@ $partial-debit: #f0b505;
         border-radius: 5px;
         padding: 15px;
         margin-top: 20px;
-        box-shadow: 0 3px 22px -8px rgba(0, 0, 0, 0.54);
+        box-shadow: 0 3px 22px -8px $by-date-shadow;
         grid-template-columns: 75% 25%;
 
         & p {
@@ -33,7 +30,7 @@ $partial-debit: #f0b505;
             }
 
             & p:not(:nth-of-type(1)) {
-                color: rgb(144, 144, 144);
+                color: $by-date-opacity-txt !important;
                 font-size: 13px;                
             }
         }
@@ -57,18 +54,18 @@ $partial-debit: #f0b505;
     }
 
     .debit {
-        color: $debit;
+        color: $debit !important;
     }
 
     .credit {
-        color: $credit;
+        color: $credit !important;
     }
 
     .partial-debit {
-        color: $partial-debit;
+        color: $partial-debit !important;
     }
 
     .partial-credit {
-        color: $partial-credit;
+        color: $partial-credit !important;
     }
 }
