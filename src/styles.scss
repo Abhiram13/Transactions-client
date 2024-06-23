@@ -2,6 +2,10 @@
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "./colors.scss";
 
+html {
+   --bt-toggle-text: black;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -29,14 +33,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
    cursor: pointer !important;
 }
 
+/** MATERIAL FORM STYLES */
+
+.mdc-label {
+   color: var(--bt-toggle-text);
+}
+
+/** MATERIAL FORM STYLES */
+
 /* Light mode */
 @media (prefers-color-scheme: light) {
    body, table, section {
       background-color: $light-bg;
-   }
-
-   span, p, h1, h2, h3, h4, h5, h6, tr, th, td {
-      color: black !important;
    }
 }
 
@@ -46,11 +54,33 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       background-color: $dark-bg !important;      
    }
 
-   span, p, h1, h2, h3, h4, h5, h6, tr, th, td {
-      color: $light-txt !important;
-   }
-}
+   html {
+      --mdc-filled-text-field-container-color: #{$dark-input-form};
+      --mdc-filled-text-field-label-text-color: #{$dark-input-label};
+      --mat-select-panel-background-color: #{$dark-select-dropdown};
+      --mat-select-enabled-arrow-color: #{$dark-input-label};
+      --mdc-filled-text-field-focus-label-text-color: #{$label-dark-purple};
+      --mdc-icon-button-icon-color: #{$dark-input-label};
+      --mdc-filled-text-field-input-text-color: #{$dark-input-label};
+      --bt-toggle-text: #{$dark-input-label};
+      --mat-datepicker-calendar-container-background-color: #{$dark-bg};
+      --mat-datepicker-calendar-navigation-button-icon-color: #{$dark-input-label};
+      --mdc-icon-button-disabled-icon-color: #{$form-field-disabled-text};
+      --mat-datepicker-calendar-period-button-icon-color: #{$dark-input-label};
+      --mat-datepicker-calendar-date-text-color: #{$dark-input-label};
+      --mat-datepicker-calendar-date-disabled-state-text-color: #{$form-field-disabled-text};      
+      --mat-datepicker-calendar-period-button-text-color: #{$dark-input-label};
+      --mat-datepicker-calendar-date-today-selected-state-outline-color: #{$dark-input-label};
+      --mat-divider-color: #{$dark-input-label};
+      --mdc-list-list-item-label-text-color: #{$dark-input-label};
+      --mat-table-header-headline-color: #{$dark-input-label};
+      --mat-table-row-item-label-text-color: #{$dark-input-label};
+      --mat-option-label-text-color: #{$dark-input-label};
+      --mat-datepicker-calendar-header-text-color: #{$dark-input-label};
+      --mat-datepicker-calendar-body-label-text-color: #{$dark-input-label};
 
-button span {
-   color: $light-txt !important;
+      & mat-hint {
+         color: #{$dark-input-label};
+      }
+   }
 }

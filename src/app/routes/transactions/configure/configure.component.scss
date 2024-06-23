@@ -2,6 +2,10 @@
     margin: 30px auto;
     width: 60%;
 
+    h1 {
+        color: var(--bt-toggle-text);
+    }
+
     form#form-group {
         display: grid;
         grid-template-columns: auto auto auto auto;
@@ -9,7 +13,7 @@
         grid-template-rows: 80px 80px;
         align-items: center;
         width: 100%;
-        margin: 30px auto;
+        margin: 30px auto;        
     }
 }
 
