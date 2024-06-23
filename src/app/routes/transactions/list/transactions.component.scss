@@ -1,1 +1,7 @@
 @import "../../../../colors.scss";
+
+#transaction-list {
+    h4 {
+        color: var(--bt-toggle-text);
+    }
+}
