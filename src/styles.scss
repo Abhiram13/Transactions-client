@@ -3,7 +3,7 @@
 @import "./colors.scss";
 
 html {
-   --bt-toggle-text: black;
+   --bt-toggle-text: black;   
 }
 
 html, body { height: 100%; }
@@ -78,6 +78,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       --mat-option-label-text-color: #{$dark-input-label};
       --mat-datepicker-calendar-header-text-color: #{$dark-input-label};
       --mat-datepicker-calendar-body-label-text-color: #{$dark-input-label};
+      --mat-select-enabled-trigger-text-color: #{$dark-input-label};
+      --mdc-filled-text-field-hover-label-text-color: #{$label-dark-purple};
+      --mdc-filled-text-field-hover-active-indicator-color: #{$label-dark-purple};
+      --mat-divider-width: 0.2px;
 
       & mat-hint {
          color: #{$dark-input-label};

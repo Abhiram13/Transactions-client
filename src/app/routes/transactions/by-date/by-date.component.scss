@@ -18,6 +18,7 @@
         & p#details-text {
             line-height: 23px;
             letter-spacing: 0.6px;
+            color: var(--bt-toggle-text);
         }
 
         & #details-block {
@@ -43,6 +44,7 @@
             & p {
                 font-size: 20px;
                 margin-left: 5px;
+                color: var(--bt-toggle-text);
             }
 
             & span {
