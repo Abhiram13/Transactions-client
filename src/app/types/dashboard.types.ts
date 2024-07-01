@@ -1,15 +1,22 @@
 export namespace TransactionNS {
-    /**
-    * @interface
-    * Used in list by date transactions API which provides list of transactions by date wise along with values
-    * like **debit**, **credit**, **date of transaction** and **count** (no of transactions).
-    */
-    export interface IList {
-        debit: number;
-        credit: number;
-        date: string;
-        count: number;
-        date_link: string;
+    export namespace ListViewNS {
+        /**
+        * @interface
+        * Used in list by date transactions API which provides list of transactions by date wise along with values
+        * like **debit**, **credit**, **date of transaction** and **count** (no of transactions).
+        */
+        export interface IList {
+            debit: number;
+            credit: number;
+            date: string;
+            count: number;
+            date_link: string;
+        }
+
+        export interface IResponse {
+            total_count: number;
+            transactions: IList[]
+        }
     }
 
     export interface ITransactionByDate {

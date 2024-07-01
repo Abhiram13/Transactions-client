@@ -8,11 +8,12 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FooterService } from '../../../services/footer.service';
 import { AppDirective, MarginDirective, TextDirective } from '../../../directives/directives';
+import { FormModule } from '../../../modules/form.module';
 
 @Component({
     selector: 'dashboard',
     standalone: true,
-    imports: [MatTableModule, MatButtonModule, CommonModule, MarginDirective, TextDirective, AppDirective],
+    imports: [MatTableModule, MatButtonModule, CommonModule, MarginDirective, TextDirective, AppDirective, FormModule],
     templateUrl: './transactions.component.html',
     styleUrl: './transactions.component.scss'
 })
@@ -20,8 +21,13 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     public columns: string[] = ['date', 'debit', 'credit', 'count'];
     public error: boolean = false;
     public message: string = "";
-    public dataSource: TransactionNS.IList[] = [];
+    public count: number = 0;
+    public dataSource: TransactionNS.ListViewNS.IList[] = [];
+    public mapOfMonths: Map<number, string> = new Map();
+    public month: number = new Date().getMonth() + 1;
+    public selectedMonth: string = "";
     private subscription: Subscription = new Subscription();    
+    private selectedYear: number = new Date().getFullYear();   
 
     @ViewChild('footer', { read: ViewContainerRef })
     public footer!: ViewContainerRef;
@@ -32,16 +38,40 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     constructor(private readonly TRANSACTION: TransactionService, private readonly ROUTER: Router, private readonly ACTIVEROUTE: ActivatedRoute, private readonly FOOTER: FooterService) { }
 
     ngOnInit(): void {
+        this.monthInit();
         this.fetchTransactions();
     }
 
-    private fetchTransactions(): void {
-        this.subscription = this.TRANSACTION.list<TransactionNS.IList[]>().subscribe({ next: this.fetchTransactionsSuccess.bind(this), error: this.fetchTransactionsError.bind(this) });
+    private monthInit(): void {
+        this.mapOfMonths.set(1, 'Jan');        
+        this.mapOfMonths.set(2, 'Feb');        
+        this.mapOfMonths.set(3, 'Mar');        
+        this.mapOfMonths.set(4, 'Apr');        
+        this.mapOfMonths.set(5, 'May');        
+        this.mapOfMonths.set(6, 'Jun');        
+        this.mapOfMonths.set(7, 'Jul');        
+        this.mapOfMonths.set(8, 'Aug');        
+        this.mapOfMonths.set(9, 'Sep');        
+        this.mapOfMonths.set(10, 'Oct');        
+        this.mapOfMonths.set(11, 'Nov');        
+        this.mapOfMonths.set(12, 'Dec');
+
+        this.selectedMonth = this.mapOfMonths.get(this.month) || this.selectedMonth;
     }
 
-    private fetchTransactionsSuccess(response: IApiResonse<TransactionNS.IList[]>): void {
+    private fetchTransactions(): void {
+        const queryParams = {
+            month: ('0' + this.month).slice(-2),
+            year: this.selectedYear
+        };
+
+        this.subscription = this.TRANSACTION.list<TransactionNS.ListViewNS.IResponse>(queryParams).subscribe({ next: this.fetchTransactionsSuccess.bind(this), error: this.fetchTransactionsError.bind(this) });
+    }
+
+    private fetchTransactionsSuccess(response: IApiResonse<TransactionNS.ListViewNS.IResponse>): void {
         if (response.status_code === StatusCode.OK) {
-            this.dataSource = response?.result || [];
+            this.dataSource = response?.result?.transactions || [];
+            this.count = response?.result?.total_count || 0;
             return;
         } else {
             this.FOOTER.invoke(response?.message || "Something went wrong", "Dismiss");
@@ -52,15 +82,29 @@ export class TransactionListComponent implements OnInit, OnDestroy {
         this.FOOTER.invoke(error?.message || "Something went wrong", "Dismiss");
     }
 
-    toDateView(date: string): void {
+    public toDateView(date: string): void {
         this.ROUTER.navigate([date], {relativeTo: this.ACTIVEROUTE});
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.subscription?.unsubscribe();
     }
 
-    toAddView(): void {
+    public toAddView(): void {
         this.ROUTER.navigate(['add'], {relativeTo: this.ACTIVEROUTE});
+    }
+
+    public previousMonth(): void {
+        if (!this.month) this.month = 12;        
+        this.month--;
+        this.selectedMonth = this.mapOfMonths.get(this.month) || this.selectedMonth;
+        this.fetchTransactions();
+    }
+
+    public nextMonth(): void {
+        if (this.month === 12) this.month = 1;
+        this.month++;
+        this.selectedMonth = this.mapOfMonths.get(this.month) || this.selectedMonth;
+        this.fetchTransactions();
     }
 }
