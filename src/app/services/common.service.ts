@@ -1,5 +1,5 @@
 import { HttpParams } from "@angular/common/http";
-import { IComponentService, IApiResonse } from "../types/export.types";
+import { IComponentService, IApiResonse, QueryParams } from "../types/export.types";
 import { HttpService } from "./export.service";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
@@ -23,8 +23,24 @@ export class ComponentService implements IComponentService {
 
     constructor(protected readonly HTTP: HttpService) { }
 
-    list<Result extends object>(): Observable<IApiResonse<Result>> {
-        return this.HTTP.get<Result>(this.PREFIX);
+    private setQueryParams(queryParams: QueryParams): string {
+        let params: string = "";
+
+        Object.entries(queryParams)?.map(function ([key, value]) {
+            params += params ? `&${key}=${value}` : `${key}=${value}`;
+        });
+
+        return params;
+    }
+
+    list<Result extends object>(queryParams?: QueryParams): Observable<IApiResonse<Result>> {
+        let url: string = this.PREFIX;
+
+        if (queryParams && Object.keys(queryParams)?.length) {
+            url += `?${this.setQueryParams(queryParams)}`;
+        }
+
+        return this.HTTP.get<Result>(url);
     }
 
     delete(id: string): Observable<IApiResonse<{}>> {

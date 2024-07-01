@@ -7,8 +7,10 @@ export interface IApiResonse<T extends object = {}> {
    result?: T;
 }
 
+export type QueryParams = object;
+
 export interface IComponentService {
-   list<Result extends object>(): Observable<IApiResonse<Result>>;
+   list<Result extends object>(queryParams?: QueryParams): Observable<IApiResonse<Result>>;
    insert<Payload>(payload: Payload): Observable<IApiResonse>;
    delete(id: string): Observable<IApiResonse>;
    searchById<Result extends object>(id: string): Observable<IApiResonse<Result>>;
