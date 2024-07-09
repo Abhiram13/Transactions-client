@@ -9,11 +9,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FooterService } from '../../../services/footer.service';
 import { AppDirective, MarginDirective, TextDirective } from '../../../directives/directives';
 import { FormModule } from '../../../modules/form.module';
+import { CategoryTrnsComponent } from './category-trns/category-trns.component';
 
 @Component({
     selector: 'dashboard',
     standalone: true,
-    imports: [MatTableModule, MatButtonModule, CommonModule, MarginDirective, TextDirective, AppDirective, FormModule],
+    imports: [MatTableModule, MatButtonModule, CommonModule, MarginDirective, TextDirective, AppDirective, FormModule, CategoryTrnsComponent],
     templateUrl: './transactions.component.html',
     styleUrl: './transactions.component.scss'
 })
@@ -23,6 +24,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     public message: string = "";
     public count: number = 0;
     public dataSource: TransactionNS.ListViewNS.IList[] = [];
+    public categories: TransactionNS.ListViewNS.ICategory[] = [];
     public mapOfMonths: Map<number, string> = new Map();
     public month: number = new Date().getMonth() + 1;
     public selectedMonth: string = "";
@@ -72,6 +74,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
         if (response.status_code === StatusCode.OK) {
             this.dataSource = response?.result?.transactions || [];
             this.count = response?.result?.total_count || 0;
+            this.categories = response?.result?.categories || [];
             return;
         } else {
             this.FOOTER.invoke(response?.message || "Something went wrong", "Dismiss");
