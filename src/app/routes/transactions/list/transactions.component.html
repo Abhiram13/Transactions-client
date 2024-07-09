@@ -10,7 +10,8 @@
         <button mat-flat-button color="primary" (click)="toAddView()">Add</button>
     </div>
 
-    <section class="d-flex" [margin]="'10px auto auto auto'" style="width: 90vw;">
+    <section class="" [margin]="'10px auto auto auto'" style="width: 90vw;">
+        <category-trns [dataSource]="categories"></category-trns>
         <table [margin]="'0 0 25px 0'" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <!-- Date Column -->
             <ng-container matColumnDef="date">

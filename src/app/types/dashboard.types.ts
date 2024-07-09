@@ -13,9 +13,15 @@ export namespace TransactionNS {
             date_link: string;
         }
 
+        export interface ICategory {
+            category: string;
+            amount: number;
+        }
+
         export interface IResponse {
             total_count: number;
-            transactions: IList[]
+            transactions: IList[];
+            categories: ICategory[];
         }
     }
 
