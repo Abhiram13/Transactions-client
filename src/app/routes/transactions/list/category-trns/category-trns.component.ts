@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { TransactionNS } from '../../../../types/export.types';
 import { MarginDirective } from '../../../../directives/directives';
 
-type ListViewCategory = TransactionNS.ListViewNS.ICategory;
+type ListViewCategory = TransactionNS.ListViewNS.ICategory; 
 
 @Component({
     selector: 'category-trns',
