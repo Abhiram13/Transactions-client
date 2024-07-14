@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IApiResonse } from "../types/export.types";
 
+declare var API_URL: string;
+
 /**
  * Service resposible for making HTTP calls with single method functions
  */
@@ -11,8 +13,7 @@ export class HttpService {
     private readonly API: string;
 
     constructor(private http: HttpClient) {
-        this.API = "https://budget-tracker-dotnet-edu262f3lq-uc.a.run.app";
-        // this.API = "http://192.168.0.123:3002"
+        this.API = API_URL || "";
     }
 
     /**
