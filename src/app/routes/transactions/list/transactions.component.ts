@@ -10,6 +10,7 @@ import { FooterService } from '../../../services/footer.service';
 import { AppDirective, MarginDirective, TextDirective } from '../../../directives/directives';
 import { FormModule } from '../../../modules/form.module';
 import { CategoryTrnsComponent } from './category-trns/category-trns.component';
+import { ObservableService } from '../../../pipes/test.pipe';
 
 @Component({
     selector: 'dashboard',
@@ -28,8 +29,8 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     public mapOfMonths: Map<number, string> = new Map();
     public month: number = new Date().getMonth() + 1;
     public selectedMonth: string = "";
-    private subscription: Subscription = new Subscription();    
-    private selectedYear: number = new Date().getFullYear();   
+    private subscription: Subscription = new Subscription();
+    private selectedYear: number = new Date().getFullYear();
 
     @ViewChild('footer', { read: ViewContainerRef })
     public footer!: ViewContainerRef;
@@ -37,25 +38,31 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     /**
      * @param TRANSACTION Service that allows to call `transactions` APIs as methods
      */
-    constructor(private readonly TRANSACTION: TransactionService, private readonly ROUTER: Router, private readonly ACTIVEROUTE: ActivatedRoute, private readonly FOOTER: FooterService) { }
+    constructor(private readonly TRANSACTION: TransactionService, private readonly ROUTER: Router, private readonly ACTIVEROUTE: ActivatedRoute, private readonly FOOTER: FooterService, private readonly observer: ObservableService) { }
 
     ngOnInit(): void {
         this.monthInit();
         this.fetchTransactions();
+        // this.observer.SampleObserver.next("Sample one");
+        // const x = this.observer.trigger().subscribe(res => {
+        //     console.log(res);
+        // });
+
+        // x.unsubscribe();
     }
 
     private monthInit(): void {
-        this.mapOfMonths.set(1, 'Jan');        
-        this.mapOfMonths.set(2, 'Feb');        
-        this.mapOfMonths.set(3, 'Mar');        
-        this.mapOfMonths.set(4, 'Apr');        
-        this.mapOfMonths.set(5, 'May');        
-        this.mapOfMonths.set(6, 'Jun');        
-        this.mapOfMonths.set(7, 'Jul');        
-        this.mapOfMonths.set(8, 'Aug');        
-        this.mapOfMonths.set(9, 'Sep');        
-        this.mapOfMonths.set(10, 'Oct');        
-        this.mapOfMonths.set(11, 'Nov');        
+        this.mapOfMonths.set(1, 'Jan');
+        this.mapOfMonths.set(2, 'Feb');
+        this.mapOfMonths.set(3, 'Mar');
+        this.mapOfMonths.set(4, 'Apr');
+        this.mapOfMonths.set(5, 'May');
+        this.mapOfMonths.set(6, 'Jun');
+        this.mapOfMonths.set(7, 'Jul');
+        this.mapOfMonths.set(8, 'Aug');
+        this.mapOfMonths.set(9, 'Sep');
+        this.mapOfMonths.set(10, 'Oct');
+        this.mapOfMonths.set(11, 'Nov');
         this.mapOfMonths.set(12, 'Dec');
 
         this.selectedMonth = this.mapOfMonths.get(this.month) || this.selectedMonth;
@@ -98,7 +105,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     }
 
     public previousMonth(): void {
-        if (!this.month) this.month = 12;        
+        if (!this.month) this.month = 12;
         this.month--;
         this.selectedMonth = this.mapOfMonths.get(this.month) || this.selectedMonth;
         this.fetchTransactions();
