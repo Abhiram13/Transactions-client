@@ -10,11 +10,13 @@ import { FooterService } from '../../../services/footer.service';
 import { AppDirective, MarginDirective, TextDirective } from '../../../directives/directives';
 import { FormModule } from '../../../modules/form.module';
 import { CategoryTrnsComponent } from './category-trns/category-trns.component';
+import { DateFormatterPipe } from '../../../pipes/date-formatter.pipe';
+import { AmountFormatterPipe } from '../../../pipes/amount-formatter.pipe';
 
 @Component({
     selector: 'dashboard',
     standalone: true,
-    imports: [MatTableModule, MatButtonModule, CommonModule, MarginDirective, TextDirective, AppDirective, FormModule, CategoryTrnsComponent],
+    imports: [MatTableModule, MatButtonModule, CommonModule, MarginDirective, TextDirective, AppDirective, FormModule, CategoryTrnsComponent, DateFormatterPipe, AmountFormatterPipe],
     templateUrl: './transactions.component.html',
     styleUrl: './transactions.component.scss'
 })
@@ -67,7 +69,10 @@ export class TransactionListComponent implements OnInit, OnDestroy {
             year: this.selectedYear
         };
 
-        this.subscription = this.TRANSACTION.list<TransactionNS.ListViewNS.IResponse>(queryParams).subscribe({ next: this.fetchTransactionsSuccess.bind(this), error: this.fetchTransactionsError.bind(this) });
+        this.subscription = this.TRANSACTION.list<TransactionNS.ListViewNS.IResponse>(queryParams).subscribe({ 
+            next: this.fetchTransactionsSuccess.bind(this), 
+            error: this.fetchTransactionsError.bind(this) 
+        });
     }
 
     private fetchTransactionsSuccess(response: IApiResonse<TransactionNS.ListViewNS.IResponse>): void {

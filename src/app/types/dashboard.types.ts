@@ -10,7 +10,6 @@ export namespace TransactionNS {
             credit: number;
             date: string;
             count: number;
-            date_link: string;
         }
 
         export interface ICategory {
