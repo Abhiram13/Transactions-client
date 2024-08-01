@@ -14,6 +14,12 @@ import { AppDirective } from '../../directives/directives';
 export class DashboardComponent {
     constructor(private readonly ROUTER: Router) {}
 
+    public toggle: boolean = false;
+
+    public click() {
+        this.toggle = !this.toggle;
+    }
+
     toTransactions(): void {
         this.ROUTER.navigateByUrl("/transactions");
     }
