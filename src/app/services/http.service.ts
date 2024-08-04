@@ -13,7 +13,11 @@ export class HttpService {
     private readonly API: string;
 
     constructor(private http: HttpClient) {
-        this.API = API_URL || "";
+        try {
+            this.API = API_URL || "";
+        } catch (e) {
+            this.API =  "http://localhost:3000";
+        }
     }
 
     /**
