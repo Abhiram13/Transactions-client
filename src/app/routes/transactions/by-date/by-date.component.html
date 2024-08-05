@@ -9,7 +9,7 @@
         <div class="w-100">
             <div class="d-flex flex-row" id="amount-block">
                 <span attr.id="{{fetchColor(transaction.type)}}"></span>
-                <p>₹{{transaction.amount}}</p>
+                <p>{{transaction.amount | amountFormatter}}</p>
             </div>
             <p *ngIf="transaction.type === 1" id="details-text" class="debit" style="font-size: 11px; text-align: end;">Debit</p>
             <p *ngIf="transaction.type === 2" id="details-text" class="credit" style="font-size: 11px; text-align: end;">Credit</p>
