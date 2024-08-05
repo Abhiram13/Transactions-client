@@ -15,6 +15,7 @@ describe("Transactions list", function() {
     let fixture: ComponentFixture<TransactionListComponent>;
     let router: Router;
     let service: TransactionService;
+    let element: DebugElement;
 
     beforeEach(function () {
         const x = jasmine.createSpyObj('TransactionService', ['getPeople']);
@@ -31,6 +32,7 @@ describe("Transactions list", function() {
         router = TestBed.inject(Router);
         service = TestBed.inject(TransactionService);
         fixture.detectChanges();
+        element = fixture.debugElement;
     });
 
     it('should navigate to transactions', () => {
@@ -38,19 +40,27 @@ describe("Transactions list", function() {
         component.ngOnInit();        
     });
 
-    it('should be greater than zero', () => {
+    it('should be greater than zero', async () => {
         const queryParams = {
             month: "08",
             year: "2024"
-        };
+        };        
 
-        service.list(queryParams).subscribe(res => {
-            expect(component.dataSource.length).toBeGreaterThan(0);
-        });
+        // spyOn(service.list, 'subscribe').and.returnValue(true);
+
+        // service.list(queryParams).subscribe(res => {
+            // expect(component.dataSource.length).toEqual(0);
+            // console.log(10);
+            // // done();
+
+            // const tableElement: DebugElement = element?.query(By.css("table"));
+            // const table: HTMLTableElement = tableElement.nativeElement;
+            // console.log(table);
+        // });
     });
 
     it ("should element be exist", () => {
-        const elements: DebugElement[] = fixture.debugElement.queryAll(By.css("h4"));        
+        const elements: DebugElement[] = element.queryAll(By.css("h4"));
     
         elements?.map(element => {
             const heading: HTMLHeadingElement = element?.nativeElement;

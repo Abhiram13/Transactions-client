@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { TransactionService } from '../../../services/export.service';
 import { IApiResonse, StatusCode, TransactionNS } from "../../../types/export.types";
 import { MatButtonModule } from '@angular/material/button';
-import { Subscription } from 'rxjs';
+import { map, Observable, of, Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FooterService } from '../../../services/footer.service';
 import { AppDirective, MarginDirective, TextDirective } from '../../../directives/directives';
@@ -28,6 +28,8 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     public mapOfMonths: Map<number, string> = new Map();
     public month: number = new Date().getMonth() + 1;
     public selectedMonth: string = "";
+    public check: Observable<number[]> = of([1, 2, 3, 4]);
+    public checks: Observable<number> = of(1, 2, 3, 4);
     private subscription: Subscription = new Subscription();    
     private selectedYear: number = new Date().getFullYear();   
 
@@ -40,6 +42,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     constructor(private readonly TRANSACTION: TransactionService, private readonly ROUTER: Router, private readonly ACTIVEROUTE: ActivatedRoute, private readonly FOOTER: FooterService) { }
 
     ngOnInit(): void {
+        this.checks.pipe(map(num => num + 2)).subscribe(console.log)
         this.monthInit();
         this.fetchTransactions();
     }
