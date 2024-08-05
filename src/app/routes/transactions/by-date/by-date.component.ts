@@ -4,11 +4,12 @@ import { TransactionService } from '../../../services/transactions.service';
 import { TransactionNS } from '../../../types/dashboard.types';
 import { StatusCode } from '../../../types/enums.types';
 import { CommonModule } from '@angular/common';
+import { AmountFormatterPipe } from '../../../pipes/amount-formatter.pipe';
 
 @Component({
     selector: 'app-by-date',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, AmountFormatterPipe],
     templateUrl: './by-date.component.html',
     styleUrl: './by-date.component.scss'
 })
