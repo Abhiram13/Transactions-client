@@ -3,7 +3,8 @@
 @import "./colors.scss";
 
 html {
-   --bt-toggle-text: black;   
+   --bt-toggle-text: black;
+   --button-shadow: #{$shadow-effect-light};
 }
 
 html, body { height: 100%; }
@@ -37,6 +38,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mdc-label {
    color: var(--bt-toggle-text);
+}
+
+.mat-mdc-snack-bar-label.mdc-snackbar__label {
+   max-width: 80%;
+   overflow-wrap: anywhere;
 }
 
 /** MATERIAL FORM STYLES */
@@ -82,6 +88,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       --mdc-filled-text-field-hover-label-text-color: #{$label-dark-purple};
       --mdc-filled-text-field-hover-active-indicator-color: #{$label-dark-purple};
       --mat-divider-width: 0.2px;
+      --button-shadow: #{$shadow-effect-dark};
 
       & mat-hint {
          color: #{$dark-input-label};

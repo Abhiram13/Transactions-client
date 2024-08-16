@@ -120,23 +120,17 @@ export class ConfigureComponent implements OnInit {
             const DUE = this.formGroup.get('due')?.value;
             const TRANSACTION = new Transaction(AMOUNT, CATEGORYID, DATE, DESCRIPTION, DUE, FROMBANK, TOBANK, TYPE);
 
-            // this.isSubmitTriggered = true;
             if (this.isFormInValid()) {
                 this.FOOTER.invoke("Provide valid details", "Dismiss");
                 return;
             }
-
 
             this.SERVICE.insert(TRANSACTION).subscribe(response => {
                 if (response?.status_code === StatusCode.CREATED) {
                     this.FOOTER.invoke("Transaction inserted successfully", "Dismiss");
                     this.formDirective.resetForm();
                     this.formGroup.reset();
-                } else {
-                    this.FOOTER.invoke(response?.message || "Something went wrong", "Dismiss");
                 }
-            }, error => {
-                this.FOOTER.invoke(error?.message || "Something went wrong", "Dismiss");
             });
         } catch (e: any) {
             this.FOOTER.invoke(e?.message || "Something went wrong", "Dismiss");

@@ -3,7 +3,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withInterceptor
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-// import { Interceptor } from "../app/services/http.interceptor";
+import { HttpResponseInterceptor } from "../app/services/http.interceptor";
 
 export const appConfig: ApplicationConfig = {   
    providers: [
@@ -11,10 +11,10 @@ export const appConfig: ApplicationConfig = {
       provideAnimationsAsync(), 
       importProvidersFrom(HttpClientModule),
       provideHttpClient(withInterceptorsFromDi()),
-      // {
-      //    provide: HTTP_INTERCEPTORS,
-      //    useClass: Interceptor,
-      //    multi: true
-      // }
+      {
+         provide: HTTP_INTERCEPTORS,
+         useClass: HttpResponseInterceptor,
+         multi: true
+      }
    ],   
 };
