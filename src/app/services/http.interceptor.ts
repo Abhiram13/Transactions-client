@@ -3,13 +3,17 @@ import { Injectable, Provider } from "@angular/core";
 import { catchError, map, Observable, Subject } from "rxjs";
 import { FooterService } from "./footer.service";
 
+declare var API_KEY: string;
+
 @Injectable({ providedIn: 'root' })
 export class HttpResponseInterceptor implements HttpInterceptor {
     constructor (private _footer: FooterService) { }
 
     intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const REQUEST = req.clone({headers: req.headers.set('API_KEY', `${API_KEY}`)});
+
         return next
-            .handle(req)
+            .handle(REQUEST)
             .pipe(
                 map(this._httpResponseHandler.bind(this)), 
                 catchError(this._httpErrorHandler.bind(this))
