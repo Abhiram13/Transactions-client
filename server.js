@@ -5,8 +5,9 @@ const app = express();
 const fs = require('fs');
 
 const API_URL = process.env.API_URL || "";
+const API_KEY = process.env.API_KEY || "";
 
-fs.writeFile(__dirname + '/dist/Transactions-client/browser/assets/api.js', `const API_URL = '${API_URL}';`, err => {});
+fs.writeFile(__dirname + '/dist/Transactions-client/browser/assets/api.js', `const API_URL = '${API_URL}';const API_KEY = '${API_KEY}'`, err => {});
 
 // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist/Transactions-client/browser'));
