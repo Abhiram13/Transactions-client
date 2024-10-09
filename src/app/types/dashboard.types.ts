@@ -17,10 +17,16 @@ export namespace TransactionNS {
             amount: number;
         }
 
+        export interface IBank {
+            name: string;
+            amount: number;
+        }
+
         export interface IResponse {
             total_count: number;
-            transactions: IList[];
-            categories: ICategory[];
+            transactions?: IList[];
+            categories?: ICategory[];
+            banks?: IBank[];
         }
     }
 

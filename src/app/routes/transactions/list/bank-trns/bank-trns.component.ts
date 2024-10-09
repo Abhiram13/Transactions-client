@@ -5,16 +5,17 @@ import { TransactionNS } from '../../../../types/export.types';
 import { MarginDirective } from '../../../../directives/directives';
 import { AmountFormatterPipe } from '../../../../pipes/amount-formatter.pipe';
 
-type ListViewCategory = TransactionNS.ListViewNS.ICategory; 
+type ListView = TransactionNS.ListViewNS.IBank; 
 
 @Component({
-    selector: 'category-trns',
+    selector: 'bank-trns',
     standalone: true,
     imports: [MatTableModule, CommonModule, MarginDirective, AmountFormatterPipe],
-    templateUrl: './category-trns.component.html',
-    styleUrl: './category-trns.component.scss'
+    templateUrl: './bank-trns.component.html',
+    styleUrl: './bank-trns.component.scss'
 })
-export class CategoryTrnsComponent {
-    @Input() public dataSource: ListViewCategory[] = [];
-    public columns: string[] = ['category', 'amount'];
+export class BankTrnsComponent {
+    @Input() public dataSource: ListView[] = [];
+
+    public columns: string[] = ['name', 'amount'];
 }
