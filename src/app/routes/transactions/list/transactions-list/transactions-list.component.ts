@@ -29,11 +29,11 @@ export class TransactionsTableComponent  {
     public columns: string[] = ['date', 'debit', 'credit', 'count'];
 
     constructor (
-        private readonly _router: Router, 
+        private readonly _router: Router,
         private readonly _activeRoute: ActivatedRoute
     ) {}
 
     public toDateView(date: string): void {
-        this._router.navigate([date], { relativeTo: this._activeRoute });
+        this._router.navigate([`date/${date}`], { relativeTo: this._activeRoute });
     }
 }

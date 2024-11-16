@@ -58,9 +58,9 @@ export namespace TransactionNS {
         PartialDebit = 3,
         PartialCredit = 4
     }
-    
+
     export interface ITransactionInsertPayload {
-        amount: number;
+        amount: number | string;
         type: TransactionType;
         description: string;
         date: string;

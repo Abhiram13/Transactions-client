@@ -1,5 +1,5 @@
 <section id="form-section">
-    <h1>Add Transaction</h1>
+    <h1>{{title}} Transaction</h1>
     <form id="form-group" [formGroup]="formGroup" #formDirective="ngForm" (ngSubmit)="onSubmit()">
         <!-- Amount Field -->
         <mat-form-field matField>
@@ -19,7 +19,7 @@
                 <mat-option value="3">Partial Debit</mat-option>
                 <mat-option value="4">Partial Credit</mat-option>
             </mat-select>
-            <mat-error *ngIf="type?.errors?.['required']">Select atleast one Transaction type</mat-error>
+            <mat-error *ngIf="type?.errors?.['required']">Select a Transaction type</mat-error>
         </mat-form-field>
         <!-- Transaction Type Field -->
 
@@ -80,6 +80,6 @@
         <!-- <due-configure [isSubmitTriggered]="isSubmitTriggered" (duePayload)="submitDue($event)"></due-configure> -->
         <!-- Due Component -->
 
-        <button mat-flat-button color="primary" type="submit">Add</button>
+        <button mat-flat-button color="primary" type="submit">{{ title }}</button>
     </form>
 </section>

@@ -14,6 +14,6 @@ export class TransactionService extends ComponentService implements IComponentSe
     }
 
     listByDate(date: string): Observable<IApiResonse<TransactionNS.IDataByDate>> {
-        return this.HTTP.get<TransactionNS.IDataByDate>(this.PREFIX + '/' + date);
+        return this.HTTP.get<TransactionNS.IDataByDate>(this.PREFIX + '/date/' + date);
     }
 }

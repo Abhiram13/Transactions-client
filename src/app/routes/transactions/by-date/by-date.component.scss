@@ -15,7 +15,7 @@
             margin: 0;            
         }
 
-        & p#details-text {
+        & p.details-text {
             line-height: 23px;
             letter-spacing: 0.6px;
             color: var(--bt-toggle-text);
@@ -32,7 +32,7 @@
 
             & p:not(:nth-of-type(1)) {
                 color: $by-date-opacity-txt !important;
-                font-size: 13px;                
+                font-size: 13px;
             }
         }
 
@@ -48,8 +48,8 @@
             }
 
             & span {
-                width: 6px; 
-                height: 6px; 
+                width: 6px;
+                height: 6px;
                 border-radius: 10px;
             }
         }
