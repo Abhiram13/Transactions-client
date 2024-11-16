@@ -17,10 +17,16 @@ export namespace TransactionNS {
             amount: number;
         }
 
+        export interface IBank {
+            name: string;
+            amount: number;
+        }
+
         export interface IResponse {
             total_count: number;
-            transactions: IList[];
-            categories: ICategory[];
+            transactions?: IList[];
+            categories?: ICategory[];
+            banks?: IBank[];
         }
     }
 
@@ -52,9 +58,9 @@ export namespace TransactionNS {
         PartialDebit = 3,
         PartialCredit = 4
     }
-    
+
     export interface ITransactionInsertPayload {
-        amount: number;
+        amount: number | string;
         type: TransactionType;
         description: string;
         date: string;

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
-import { ConfigureComponent } from './routes/transactions/configure/configure.component';
+import { AddConfigureComponent, EditConfigureComponent } from './routes/transactions/configure/configure.component';
 import { TransactionListComponent } from './routes/transactions/list/transactions.component';
 import { CategoryListComponent } from './routes/categories/list/list.component';
 import { CategoryConfigureComponent, EditCategoryComponent } from './routes/categories/configure/configure.component';
@@ -12,8 +12,9 @@ export const routes: Routes = [
     { path: "", component: DashboardComponent },
     { path: "transactions", children: [
         { path: "", component: TransactionListComponent },
-        { path: "add", component: ConfigureComponent},
-        { path: ":date", component: ByDateComponent}
+        { path: "add", component: AddConfigureComponent },
+        { path: "date/:date", component: ByDateComponent },
+        { path: "edit/:id", component: EditConfigureComponent },
     ]},
     { path: "categories", children: [
         { path: "", component: CategoryListComponent },

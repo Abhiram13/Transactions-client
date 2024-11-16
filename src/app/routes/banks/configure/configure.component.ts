@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentService } from '../../../services/export.service';
 
 @Component({
+    standalone: true,
     template: ''
 })
 export class ConfigureComponent<Service extends ComponentService> implements OnInit, OnDestroy {
@@ -18,12 +19,12 @@ export class ConfigureComponent<Service extends ComponentService> implements OnI
     public action: string = "Add";
 
     constructor (
-        protected readonly BUILDER: FormBuilder,          
-        protected readonly FOOTER: FooterService, 
+        protected readonly BUILDER: FormBuilder,
+        protected readonly FOOTER: FooterService,
         protected readonly ACTIVEROUTE: ActivatedRoute,
         protected readonly LOCATION: Location,
         @Inject(ComponentService) protected readonly SERVICE: Service,
-    ) { 
+    ) {
         this.formGroup = this.BUILDER.group({
             name: ['', [Validators.required]],
         });
@@ -62,14 +63,14 @@ export class ConfigureComponent<Service extends ComponentService> implements OnI
 })
 export class BankAddComponent extends ConfigureComponent<BankService> {
     constructor (
-        protected override readonly BUILDER: FormBuilder,          
-        protected override readonly FOOTER: FooterService, 
+        protected override readonly BUILDER: FormBuilder,
+        protected override readonly FOOTER: FooterService,
         protected override readonly ACTIVEROUTE: ActivatedRoute,
         protected override readonly LOCATION: Location,
         protected override readonly SERVICE: BankService,
     ) {
         super(BUILDER, FOOTER, ACTIVEROUTE, LOCATION, SERVICE);
-    }    
+    }
 
     override onSubmit(): void {
         try {
@@ -94,9 +95,9 @@ export class BankEditComponent extends ConfigureComponent<BankService> {
     public override action: string = 'Update';
 
     constructor (
-        protected override readonly BUILDER: FormBuilder, 
-        protected override readonly SERVICE: BankService, 
-        protected override readonly FOOTER: FooterService, 
+        protected override readonly BUILDER: FormBuilder,
+        protected override readonly SERVICE: BankService,
+        protected override readonly FOOTER: FooterService,
         protected override readonly ACTIVEROUTE: ActivatedRoute,
         protected override readonly LOCATION: Location,
     ) {
@@ -112,7 +113,7 @@ export class BankEditComponent extends ConfigureComponent<BankService> {
             }
         });
     }
-    
+
     override onSubmit(): void {
         try {
             const NAME = this.formGroup.get('name')?.value;

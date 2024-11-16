@@ -12,42 +12,16 @@
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="onMenuSelectItem('transactions')">Transactions</button>
-            <button mat-menu-item (click)="onMenuSelectItem('categories')">Categories</button>
-            <button mat-menu-item (click)="onMenuSelectItem('banks')">Banks</button>
+            <button mat-menu-item (click)="onMenuSelectItem('transaction')">Transactions</button>
+            <button mat-menu-item (click)="onMenuSelectItem('category')">Categories</button>
+            <button mat-menu-item (click)="onMenuSelectItem('bank')">Banks</button>
         </mat-menu>
     </div>
 
     <section class="" [margin]="'10px auto auto auto'" style="width: 90vw;">
-        <!-- <category-trns [dataSource]="categories"></category-trns> -->
-        <table [margin]="'0 0 25px 0'" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <!-- Date Column -->
-            <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef>Date</th>
-                <td mat-cell *matCellDef="let element" (click)="toDateView(element.date)">{{element.date | dateFormatter}}</td>
-            </ng-container>
-
-            <!-- Count Column -->
-            <ng-container matColumnDef="count">
-                <th mat-header-cell *matHeaderCellDef>Count</th>
-                <td mat-cell *matCellDef="let element">{{element.count}}</td>
-            </ng-container>
-
-            <!-- Debit Column -->
-            <ng-container matColumnDef="debit">
-                <th mat-header-cell *matHeaderCellDef>Debit</th>
-                <td mat-cell *matCellDef="let element">{{element.debit | amountFormatter}}</td>
-            </ng-container>
-
-            <!-- Credit Column -->
-            <ng-container matColumnDef="credit">
-                <th mat-header-cell *matHeaderCellDef>Credit</th>
-                <td mat-cell *matCellDef="let element">{{element.credit | amountFormatter}}</td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="columns"></tr>
-            <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-        </table>
+        <transactions-list *ngIf="displayType === 'transaction'" [dataSource]="dataSource"></transactions-list>
+        <category-trns *ngIf="displayType === 'category'" [dataSource]="categories"></category-trns>    
+        <bank-trns *ngIf="displayType === 'bank'" [dataSource]="banks"></bank-trns>
     </section>
 </section>
 
