@@ -1,6 +1,10 @@
 @import "../../../../colors.scss";
 
 #by-date {
+    h2 {
+        color: var(--bt-toggle-text);
+    }
+
     .list {
         justify-content: space-between;
         width: 80%;
@@ -12,7 +16,7 @@
         grid-template-columns: 75% 25%;
 
         & p {
-            margin: 0;            
+            margin: 0;
         }
 
         & p.details-text {

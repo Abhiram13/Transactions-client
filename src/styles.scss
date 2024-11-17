@@ -3,95 +3,97 @@
 @import "./colors.scss";
 
 html {
-   --bt-toggle-text: black;
-   --button-shadow: #{$shadow-effect-light};
+    --bt-toggle-text: black;
+    --button-shadow: #{$shadow-effect-light};
 }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .d-flex {
-   display: flex;
+    display: flex;
 }
 
 .d-grid {
-   display: grid;
+    display: grid;
 }
 
 .w-100 {
-   width: 100% !important;
+    width: 100% !important;
 }
 
 .flex-row {
-   flex-direction: row !important;
+    flex-direction: row !important;
 }
 
 .flex-col {
-   flex-direction: column !important;
+    flex-direction: column !important;
 }
 
 .pointer {
-   cursor: pointer !important;
+    cursor: pointer !important;
 }
 
 /** MATERIAL FORM STYLES */
 
 .mdc-label {
-   color: var(--bt-toggle-text);
+    color: var(--bt-toggle-text);
 }
 
 .mat-mdc-snack-bar-label.mdc-snackbar__label {
-   max-width: 80%;
-   overflow-wrap: anywhere;
+    max-width: 80%;
+    overflow-wrap: anywhere;
 }
 
 /** MATERIAL FORM STYLES */
 
 /* Light mode */
 @media (prefers-color-scheme: light) {
-   body, table, section {
-      background-color: $light-bg;
-   }
+    body, table, section {
+        background-color: $light-bg;
+    }
 }
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
-   body, table, section {
-      background-color: $dark-bg !important;      
-   }
+    body, table, section {
+        background-color: $dark-bg !important;
+    }
 
-   html {
-      --mdc-filled-text-field-container-color: #{$dark-input-form};
-      --mdc-filled-text-field-label-text-color: #{$dark-input-label};
-      --mat-select-panel-background-color: #{$dark-select-dropdown};
-      --mat-select-enabled-arrow-color: #{$dark-input-label};
-      --mdc-filled-text-field-focus-label-text-color: #{$label-dark-purple};
-      --mdc-icon-button-icon-color: #{$dark-input-label};
-      --mdc-filled-text-field-input-text-color: #{$dark-input-label};
-      --bt-toggle-text: #{$dark-input-label};
-      --mat-datepicker-calendar-container-background-color: #{$dark-bg};
-      --mat-datepicker-calendar-navigation-button-icon-color: #{$dark-input-label};
-      --mdc-icon-button-disabled-icon-color: #{$form-field-disabled-text};
-      --mat-datepicker-calendar-period-button-icon-color: #{$dark-input-label};
-      --mat-datepicker-calendar-date-text-color: #{$dark-input-label};
-      --mat-datepicker-calendar-date-disabled-state-text-color: #{$form-field-disabled-text};      
-      --mat-datepicker-calendar-period-button-text-color: #{$dark-input-label};
-      --mat-datepicker-calendar-date-today-selected-state-outline-color: #{$dark-input-label};
-      --mat-divider-color: #{$dark-input-label};
-      --mdc-list-list-item-label-text-color: #{$dark-input-label};
-      --mat-table-header-headline-color: #{$dark-input-label};
-      --mat-table-row-item-label-text-color: #{$dark-input-label};
-      --mat-option-label-text-color: #{$dark-input-label};
-      --mat-datepicker-calendar-header-text-color: #{$dark-input-label};
-      --mat-datepicker-calendar-body-label-text-color: #{$dark-input-label};
-      --mat-select-enabled-trigger-text-color: #{$dark-input-label};
-      --mdc-filled-text-field-hover-label-text-color: #{$label-dark-purple};
-      --mdc-filled-text-field-hover-active-indicator-color: #{$label-dark-purple};
-      --mat-divider-width: 0.2px;
-      --button-shadow: #{$shadow-effect-dark};
+    html {
+        --mdc-filled-text-field-container-color: #{$dark-input-form};
+        --mdc-filled-text-field-label-text-color: #{$dark-input-label};
+        --mat-select-panel-background-color: #{$dark-select-dropdown};
+        --mat-select-enabled-arrow-color: #{$dark-input-label};
+        --mdc-filled-text-field-focus-label-text-color: #{$label-dark-purple};
+        --mdc-icon-button-icon-color: #{$dark-input-label};
+        --mdc-filled-text-field-input-text-color: #{$dark-input-label};
+        --bt-toggle-text: #{$dark-input-label};
+        --mat-datepicker-calendar-container-background-color: #{$dark-bg};
+        --mat-datepicker-calendar-navigation-button-icon-color: #{$dark-input-label};
+        --mdc-icon-button-disabled-icon-color: #{$form-field-disabled-text};
+        --mat-datepicker-calendar-period-button-icon-color: #{$dark-input-label};
+        --mat-datepicker-calendar-date-text-color: #{$dark-input-label};
+        --mat-datepicker-calendar-date-disabled-state-text-color: #{$form-field-disabled-text};
+        --mat-datepicker-calendar-period-button-text-color: #{$dark-input-label};
+        --mat-datepicker-calendar-date-today-selected-state-outline-color: #{$dark-input-label};
+        --mat-divider-color: #{$dark-input-label};
+        --mdc-list-list-item-label-text-color: #{$dark-input-label};
+        --mat-table-header-headline-color: #{$dark-input-label};
+        --mat-table-row-item-label-text-color: #{$dark-input-label};
+        --mat-option-label-text-color: #{$dark-input-label};
+        --mat-datepicker-calendar-header-text-color: #{$dark-input-label};
+        --mat-datepicker-calendar-body-label-text-color: #{$dark-input-label};
+        --mat-select-enabled-trigger-text-color: #{$dark-input-label};
+        --mdc-filled-text-field-hover-label-text-color: #{$label-dark-purple};
+        --mdc-filled-text-field-hover-active-indicator-color: #{$label-dark-purple};
+        --mat-menu-container-color: #{$dark-select-dropdown};
+        --mat-menu-item-label-text-color: #{$dark-input-label};
+        --mat-divider-width: 0.2px;
+        --button-shadow: #{$shadow-effect-dark};
 
-      & mat-hint {
-         color: #{$dark-input-label};
-      }
-   }
+        & mat-hint {
+            color: #{$dark-input-label};
+        }
+    }
 }
