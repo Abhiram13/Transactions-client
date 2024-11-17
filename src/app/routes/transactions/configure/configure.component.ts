@@ -153,7 +153,7 @@ export class AddConfigureComponent extends TransactionConfigureComponent impleme
                 if (response?.status_code === StatusCode.CREATED) {
                     this._footer.invoke("Transaction inserted successfully", "Dismiss");
                     this.formDirective.resetForm();
-                    this.formGroup.reset();
+                    this.formGroup.reset({date: new Date()});
                 }
             });
         } catch (e: any) {
