@@ -20,8 +20,8 @@
 
     <section class="" [margin]="'10px auto auto auto'" style="width: 90vw;">
         <transactions-list *ngIf="displayType === 'transaction'" [dataSource]="dataSource"></transactions-list>
-        <category-trns *ngIf="displayType === 'category'" [dataSource]="categories"></category-trns>    
-        <bank-trns *ngIf="displayType === 'bank'" [dataSource]="banks"></bank-trns>
+        <category-trns *ngIf="displayType === 'category'" [categories]="categories"></category-trns>
+        <bank-trns *ngIf="displayType === 'bank'" [banks]="banks"></bank-trns>
     </section>
 </section>
 
