@@ -13,11 +13,13 @@ export namespace TransactionNS {
         }
 
         export interface ICategory {
+            id: string;
             category: string;
             amount: number;
         }
 
         export interface IBank {
+            id: string;
             name: string;
             amount: number;
         }
@@ -68,6 +70,31 @@ export namespace TransactionNS {
         from_bank: string;
         to_bank: string;
         category_id: string;
+    }
+
+    export namespace ListByCategory {
+        export interface ITransactions {
+            amount: number;
+            type: TransactionType;
+            description: string;
+        }
+
+        export interface IData {
+            date: string;
+            transactions: ITransactions[];
+        }
+
+        export interface IResult {
+            category: string;
+            data: IData[];
+        }
+    }
+
+    export namespace ListByBank {
+        export interface IResult {
+            bank: string;
+            data: ListByCategory.IData[];
+        }
     }
 }
 
