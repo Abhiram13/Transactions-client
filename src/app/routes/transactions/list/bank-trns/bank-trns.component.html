@@ -2,7 +2,7 @@
    <!-- Date Column -->
    <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Bank</th>
-      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+      <td mat-cell *matCellDef="let element" (click)="toBankView(element.id)">{{element.name}}</td>
    </ng-container>
 
    <!-- Count Column -->

@@ -1,0 +1,15 @@
+<section id="transaction-category-list">
+   <h2>{{categoryName}}</h2>
+   <div *ngFor="let category of categoryTransactions" class="content">
+      <h3>{{category.date | dateFormatter}}</h3>
+      <div class="transactions">
+         <div *ngFor="let transaction of category.transactions" class="box">
+            <p>{{transaction.description}}</p>
+            <p *ngIf="transaction.type === 1" class="debit">{{transaction.amount | amountFormatter}}</p>
+            <p *ngIf="transaction.type === 2" class="credit">{{transaction.amount | amountFormatter}}</p>
+            <p *ngIf="transaction.type === 3" class="partial-debit">{{transaction.amount | amountFormatter}}</p>
+            <p *ngIf="transaction.type === 4" class="partial-credit">{{transaction.amount | amountFormatter}}</p>
+         </div>         
+      </div>
+   </div>
+</section>
