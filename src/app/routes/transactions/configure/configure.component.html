@@ -77,7 +77,14 @@
         <!-- Due Field -->
 
         <!-- Due Component -->
-        <!-- <due-configure [isSubmitTriggered]="isSubmitTriggered" (duePayload)="submitDue($event)"></due-configure> -->
+        <mat-form-field *ngIf="isDue">
+            <mat-label>Dues</mat-label>
+            <mat-select [formControl]="due_id">
+                <mat-option value="">---</mat-option>
+                <mat-option *ngFor="let due of dues" value="{{due.id}}">{{due.description}}</mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="type?.errors?.['required']">Select a Transaction type</mat-error> -->
+        </mat-form-field>
         <!-- Due Component -->
 
         <button mat-flat-button color="primary" type="submit">{{ title }}</button>

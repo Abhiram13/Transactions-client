@@ -12,6 +12,15 @@ import { MatFieldDirective } from '../../../directives/directives';
 import { FormModule } from '../../../modules/form.module';
 import { ActivatedRoute } from '@angular/router';
 import ITransactionInsertPayload = TransactionNS.ITransactionInsertPayload;
+import { DueService } from '../../../services/due.service';
+
+interface IDue {
+    description: string;
+    to_bank: string;
+    amount: number;
+    status: number;
+    id: string;
+}
 
 @Component({standalone: true, template: ""})
 class TransactionConfigureComponent implements OnInit {
@@ -20,6 +29,8 @@ class TransactionConfigureComponent implements OnInit {
     public categories: CategoryNS.IList[] = [];
     public todayDate: Date = new Date();
     public isSubmitTriggered: boolean = false;
+    public isDue: boolean = false;
+    public dues: IDue[] = [];
 
     @ViewChild("formDirective")
     public formDirective!: FormGroupDirective;
@@ -29,6 +40,7 @@ class TransactionConfigureComponent implements OnInit {
         protected readonly _service: TransactionService,
         protected readonly _category: CategoryService,
         protected readonly _bank: BankService,
+        protected readonly _dueService: DueService,
         protected readonly _footer: FooterService,
         protected readonly _activeRoute: ActivatedRoute,
         protected readonly _location: Location,
@@ -42,6 +54,7 @@ class TransactionConfigureComponent implements OnInit {
             from_bank: [''],
             to_bank: [''],
             category_id: ['', [Validators.required]],
+            due_id: ['']
         });
     }
 
@@ -62,6 +75,12 @@ class TransactionConfigureComponent implements OnInit {
             }
         });
     }
+    
+    protected _fetchDues(): void {
+        this._dueService.list<IDue[]>().subscribe(response => {
+            this.dues = response?.result || [];
+        });
+    }
 
     public get amount(): FormControl {
         return this.formGroup.get("amount") as FormControl;
@@ -80,6 +99,7 @@ class TransactionConfigureComponent implements OnInit {
     }
 
     public get due(): FormControl {
+        this.isDue = this.formGroup.get('due')?.value;
         return this.formGroup.get("due") as FormControl;
     }
 
@@ -93,6 +113,10 @@ class TransactionConfigureComponent implements OnInit {
 
     public get category_id(): FormControl {
         return this.formGroup.get("category_id") as FormControl;
+    }
+
+    public get due_id(): FormControl {
+        return this.formGroup.get("due_id") as FormControl;
     }
 
     protected _isFormInValid(): boolean {
@@ -128,6 +152,7 @@ export class AddConfigureComponent extends TransactionConfigureComponent impleme
         super.ngOnInit();
         this._fetchBanks();
         this._fetchCategories();
+        this._fetchDues();
     }
 
     public submitDue(payload: DueNS.IPayload): void { }
@@ -142,7 +167,8 @@ export class AddConfigureComponent extends TransactionConfigureComponent impleme
             const TOBANK = this.formGroup.get('to_bank')?.value;
             const CATEGORYID = this.formGroup.get('category_id')?.value;
             const DUE = this.formGroup.get('due')?.value;
-            const TRANSACTION = new Transaction(AMOUNT, CATEGORYID, DATE, DESCRIPTION, DUE, FROMBANK, TOBANK, TYPE);
+            const DUE_ID = this.formGroup.get('due_id')?.value;
+            const TRANSACTION = new Transaction(AMOUNT, CATEGORYID, DATE, DESCRIPTION, DUE, FROMBANK, TOBANK, TYPE, DUE_ID);
 
             if (this._isFormInValid()) {
                 this._footer.invoke("Provide valid details", "Dismiss");
@@ -247,8 +273,9 @@ class Transaction implements TransactionNS.ITransactionInsertPayload {
     from_bank: string;
     to_bank: string;
     type: number;
+    due_id?: string | undefined;
 
-    constructor(amount: string, category: string, date: string, description: string, due: boolean, fromBank: string, toBank: string, type: TransactionNS.TransactionType) {
+    constructor(amount: string, category: string, date: string, description: string, due: boolean, fromBank: string, toBank: string, type: TransactionNS.TransactionType, dueId?: string) {
         this.amount = parseFloat(amount);
         this.category_id = category || "";
         this.description = description || "";
@@ -257,10 +284,11 @@ class Transaction implements TransactionNS.ITransactionInsertPayload {
         this.to_bank = toBank || "";
         this.type = Number(type) || TransactionNS.TransactionType.Debit;
         this.date = this.modifyDate(date);
+        this.due_id = dueId;
     }
 
     private modifyDate(date: string): string {
-        const [DD, MM, YYYY] = new Date(date)?.toLocaleDateString()?.split("/");
+        const [DD, MM, YYYY] = new Date(date)?.toLocaleDateString('en-IN')?.split("/");
         return `${YYYY}-${MM.padStart(2, '0')}-${DD.padStart(2, '0')}`;
     }
 }

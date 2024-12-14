@@ -70,6 +70,7 @@ export namespace TransactionNS {
         from_bank: string;
         to_bank: string;
         category_id: string;
+        due_id?: string;
     }
 
     export namespace ListByCategory {

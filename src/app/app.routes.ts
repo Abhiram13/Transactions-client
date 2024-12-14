@@ -9,6 +9,9 @@ import { BankAddComponent, BankEditComponent } from './routes/banks/configure/co
 import { ByDateComponent } from './routes/transactions/by-date/by-date.component';
 import { ByCategoryComponent } from "./routes/transactions/by-category/by-category.component";
 import { ByBankComponent } from "./routes/transactions/by-bank/by-bank.component";
+import { DueListComponent } from './routes/dues/due-list/due-list.component';
+import { DueConfigureComponent } from './routes/dues/due-configure/due-configure.component';
+import { DueTransactionsComponent } from './routes/dues/due-transactions/due-transactions.component';
 
 export const routes: Routes = [
     { path: "", component: DashboardComponent },
@@ -29,5 +32,10 @@ export const routes: Routes = [
         { path: "", component: BankListComponent },
         { path: "add", component: BankAddComponent},
         { path: "edit/:id", component: BankEditComponent}
+    ]},
+    { path: "dues", children: [
+        { path: "", component: DueListComponent },
+        { path: "add", component: DueConfigureComponent},
+        { path: ":dueId", component: DueTransactionsComponent},
     ]},
 ];
