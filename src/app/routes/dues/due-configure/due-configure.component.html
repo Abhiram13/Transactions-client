@@ -1,0 +1,46 @@
+<section id="form-section">
+   <h1>Add Due</h1>
+   <form id="form-group" [formGroup]="formGroup" #formDirective="ngForm" (ngSubmit)="onSubmit()">
+      <!-- Amount Field -->
+      <mat-form-field matField>
+         <mat-label>Amount</mat-label>
+         <input myInput matInput [formControl]="amount">
+         <mat-error *ngIf="amount?.errors?.['required']">Amount is required</mat-error>
+         <mat-error *ngIf="amount?.errors?.['pattern']">Amount contains invalid characters</mat-error>
+      </mat-form-field>
+      <!-- Amount Field -->
+
+      <!-- Transaction Type Field -->
+      <mat-form-field>
+         <mat-label>Due type</mat-label>
+         <mat-select [formControl]="status">
+            <mat-option value="1">Active</mat-option>
+            <mat-option value="2">Ended</mat-option>
+            <mat-option value="3">Hold</mat-option>
+         </mat-select>
+         <mat-error *ngIf="status?.errors?.['required']">Select a Due type</mat-error>
+      </mat-form-field>
+      <!-- Transaction Type Field -->
+
+      <!-- Description Field -->
+      <mat-form-field style="height: 80px;">
+         <mat-label>Description</mat-label>
+         <textarea matInput [formControl]="description"></textarea>
+         <mat-error *ngIf="description?.errors?.['required']">Description is required</mat-error>
+         <mat-error *ngIf="description?.errors?.['pattern']">Description contains invalid characters</mat-error>
+      </mat-form-field>
+      <!-- Description Field -->
+
+      <!-- From bank Field -->
+      <mat-form-field>
+         <mat-label>Payee bank</mat-label>
+         <mat-select [formControl]="to_bank">
+            <mat-option value="">---</mat-option>
+            <mat-option *ngFor="let bank of banks" value="{{bank.id}}">{{bank.name}}</mat-option>
+         </mat-select>
+      </mat-form-field>
+      <!-- From bank Field -->
+
+      <button mat-flat-button color="primary" type="submit">Add</button>
+   </form>
+</section>

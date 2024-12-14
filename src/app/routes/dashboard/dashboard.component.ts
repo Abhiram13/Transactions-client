@@ -25,4 +25,8 @@ export class DashboardComponent {
     toBanks(): void {
         this.ROUTER.navigateByUrl("/banks");
     }
+
+    toDues(): void {
+        this.ROUTER.navigateByUrl("/dues");
+    }
 }
