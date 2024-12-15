@@ -14,6 +14,7 @@ interface IPayload {
     to_bank: string;
     amount: number | string;
     status: number | string;
+    id?: string;
 }
 
 @Component({
@@ -109,8 +110,7 @@ export class DueConfigureComponent implements OnInit {
         if (this._type === 'update') {
             this._dueService.update<IPayload>(this._dueId, {
                 ...payload,
-                amount: `${payload.amount}`,
-                status: `${payload.status}`
+                id: this._dueId
             }).subscribe(response => {
                 if (response?.status_code === StatusCode.CREATED) {
                     this._footer.invoke(response?.message || "Due updated successfully", "Dismiss");

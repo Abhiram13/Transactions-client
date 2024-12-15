@@ -78,7 +78,7 @@ export class EditCategoryComponent extends ConfigureComponent<CategoryService> {
         try {
             const NAME = this.formGroup.get('name')?.value;
 
-            this.SERVICE.update<CategoryNS.IPayload>(this.categoryId, { name: NAME })?.subscribe(this.postSubmit.bind(this), this.errorLog.bind(this));
+            this.SERVICE.update<CategoryNS.IPayload>(this.categoryId, { name: NAME, id: this.categoryId })?.subscribe(this.postSubmit.bind(this), this.errorLog.bind(this));
         } catch (e: any) {
             this.FOOTER.invoke(e?.message || "Something went wrong", "Dismiss");
         }      
