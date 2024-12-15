@@ -132,7 +132,7 @@ class TransactionConfigureComponent implements OnInit {
     }
 
     protected _modifyDate(date: string): string {
-        const [DD, MM, YYYY] = new Date(date)?.toLocaleDateString()?.split("/");
+        const [DD, MM, YYYY] = new Date(date)?.toLocaleDateString('en-IN')?.split("/");
         return `${YYYY}-${MM.padStart(2, '0')}-${DD.padStart(2, '0')}`;
     }
 }
@@ -206,6 +206,7 @@ export class EditConfigureComponent extends TransactionConfigureComponent implem
         this._fetchCategories();
         this._transactionId = this._activeRoute.snapshot.params?.['id'];
         this._fetchTransaction();
+        this._fetchDues();
     }
 
     private _fetchTransaction(): void {
@@ -225,6 +226,7 @@ export class EditConfigureComponent extends TransactionConfigureComponent implem
         this.formGroup.get("from_bank")?.setValue(transaction.from_bank);
         this.formGroup.get("to_bank")?.setValue(transaction.to_bank);
         this.formGroup.get("category_id")?.setValue(transaction.category_id);
+        this.formGroup.get("due_id")?.setValue(transaction.due_id);
     }
 
     public onSubmit(): void {
@@ -236,6 +238,7 @@ export class EditConfigureComponent extends TransactionConfigureComponent implem
         const TO_BANK = this.formGroup.get('to_bank')?.value;
         const CATEGORY_ID = this.formGroup.get('category_id')?.value;
         const DUE = this.formGroup.get('due')?.value;
+        const DUE_ID = this.formGroup.get('due_id')?.value;
 
         if (this._isFormInValid()) {
             this._footer.invoke("Provide valid details", "Dismiss");
@@ -250,7 +253,8 @@ export class EditConfigureComponent extends TransactionConfigureComponent implem
             due: `${DUE}`,
             from_bank: FROM_BANK,
             to_bank: TO_BANK,
-            type: TYPE
+            type: TYPE,
+            due_id: DUE_ID
         };
 
         this._service.update(this._transactionId, PAYLOAD).subscribe(response => {

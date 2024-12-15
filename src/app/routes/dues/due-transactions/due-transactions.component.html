@@ -1,5 +1,10 @@
 <section style="margin: 30px;">    
-    <h3>Sample description</h3>
+    <div style="display: flex; align-items: center;">
+        <h3 style="font-weight: 500; margin: 0;">{{result.description}}</h3>
+        <span *ngIf="result.status === 1" style="background-color: rgb(8, 184, 8); color: white; padding: 0px 6px; font-size: 10px; border-radius: 5px; margin-left: 5px;">Active</span>
+        <span *ngIf="result.status === 2" style="background-color: rgb(159, 70, 235); color: white; padding: 0px 6px; font-size: 10px; border-radius: 5px; margin-left: 5px;">Ended</span>
+        <span *ngIf="result.status === 3" style="background-color: rgb(255, 119, 0); color: white; padding: 0px 6px; font-size: 10px; border-radius: 5px; margin-left: 5px;">Hold</span>        
+    </div>
     <div *ngFor="let transaction of result.transactions" class="d-grid list">
         <div id="details-block">
             <p class="details-text">{{transaction.description}}</p>
