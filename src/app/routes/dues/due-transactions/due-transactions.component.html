@@ -1,10 +1,10 @@
-<section>    
-    <p>Sample description</p>
+<section style="margin: 30px;">    
+    <h3>Sample description</h3>
     <div *ngFor="let transaction of result.transactions" class="d-grid list">
         <div id="details-block">
             <p class="details-text">{{transaction.description}}</p>
-            <p class="details-text">From: {{transaction.from_bank || '---'}}</p>
-            <p class="details-text">To: {{transaction.to_bank || '---'}}</p>
+            <!-- <p class="details-text">From: {{transaction.from_bank || '---'}}</p> -->
+            <!-- <p class="details-text">To: {{transaction.to_bank || '---'}}</p> -->
             <!-- <p class="details-text">Category: {{transaction.category}}</p> -->
         </div>
         <div class="w-100">

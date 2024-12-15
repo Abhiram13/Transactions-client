@@ -5,6 +5,7 @@ import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 interface IDue {
     description: string;
@@ -17,7 +18,7 @@ interface IDue {
 @Component({
     selector: 'app-due-list',
     standalone: true,
-    imports: [MatListModule, MatDividerModule, CommonModule, MatButtonModule],
+    imports: [MatListModule, MatDividerModule, CommonModule, MatButtonModule, MatIconModule],
     templateUrl: './due-list.component.html',
     styleUrl: './due-list.component.scss'
 })
@@ -42,5 +43,9 @@ export class DueListComponent implements OnInit {
 
     public toAddView(): void {
         this._router.navigate(['add'], { relativeTo: this._activeRoute });
+    }
+
+    public toEditView(dueId: string): void {
+        this._router.navigate(['edit/' + dueId], { relativeTo: this._activeRoute });
     }
 }

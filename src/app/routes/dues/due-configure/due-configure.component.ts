@@ -6,12 +6,14 @@ import { MatFieldDirective } from '../../../directives/directives';
 import { BankNS, StatusCode } from '../../../types/export.types';
 import { BankService } from '../../../services/bank.service';
 import { DueService } from '../../../services/due.service';
+import { ActivatedRoute } from '@angular/router';
+import { FooterService } from '../../../services/footer.service';
 
 interface IPayload {
     description: string;
     to_bank: string;
-    amount: number;
-    status: number;
+    amount: number | string;
+    status: number | string;
 }
 
 @Component({
@@ -22,13 +24,22 @@ interface IPayload {
     styleUrl: './due-configure.component.scss'
 })
 export class DueConfigureComponent implements OnInit {
+    private _dueId: string = "";
+    private _due: IPayload = {} as IPayload;
+    private _type: 'add' | 'update' = 'add';
     public formGroup!: FormGroup;
     public banks: BankNS.IList[] = [];
 
     @ViewChild("formDirective")
     public formDirective!: FormGroupDirective;
 
-    constructor(private readonly _builder: FormBuilder, private readonly _bankService: BankService, private readonly _dueService: DueService) {
+    constructor(
+        private readonly _builder: FormBuilder, 
+        private readonly _bankService: BankService, 
+        private readonly _dueService: DueService,
+        private readonly _activeRoute: ActivatedRoute,
+        private readonly _footer: FooterService
+    ) {
         this.formGroup = this._builder.group({
             amount: [''],
             description: ['', [Validators.required]],
@@ -38,7 +49,29 @@ export class DueConfigureComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this._dueId = this._activeRoute.snapshot.params?.['dueId'];
         this._fetchBanks();
+
+        if (this._dueId) {
+            this._type = 'update';
+            this._fetchDue();     
+        }
+    }
+
+    protected _fetchDue(): void {
+        this._dueService.searchById<IPayload>(this._dueId).subscribe(response => {
+            if (response.status_code === StatusCode.OK) {
+                this._due = response.result || {} as IPayload;
+                this._setDueForm();
+            }
+        });
+    }
+
+    private _setDueForm(): void {
+        this.formGroup.get("amount")?.setValue(this._due.amount);
+        this.formGroup.get("description")?.setValue(this._due.description);
+        this.formGroup.get("status")?.setValue(`${this._due.status}`);
+        this.formGroup.get("to_bank")?.setValue(this._due.to_bank);
     }
 
     protected _fetchBanks(): void {
@@ -73,7 +106,26 @@ export class DueConfigureComponent implements OnInit {
             to_bank: this.formGroup.get('to_bank')?.value
         };
 
-        this._dueService.insert<IPayload>(payload).subscribe(response => {            
-        })
+        if (this._type === 'update') {
+            this._dueService.update<IPayload>(this._dueId, {
+                ...payload,
+                amount: `${payload.amount}`,
+                status: `${payload.status}`
+            }).subscribe(response => {
+                if (response?.status_code === StatusCode.CREATED) {
+                    this._footer.invoke(response?.message || "Due updated successfully", "Dismiss");
+                } else {
+                    this._footer.invoke(response?.message || "Due cannot be updated", "Dismiss");
+                }
+            });
+        } else {
+            this._dueService.insert<IPayload>(payload).subscribe(response => { 
+                if (response?.status_code === StatusCode.CREATED) {
+                    this._footer.invoke(response?.message || "Due created successfully", "Dismiss");
+                } else {
+                    this._footer.invoke(response?.message || "Due cannot be created", "Dismiss");
+                }
+            })
+        }        
     }
 }
