@@ -118,6 +118,7 @@ export namespace CategoryNS {
 
     export interface IPayload {
         name: string;
+        id?: string;
     }
 }
 

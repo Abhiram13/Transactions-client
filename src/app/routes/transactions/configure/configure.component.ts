@@ -246,15 +246,16 @@ export class EditConfigureComponent extends TransactionConfigureComponent implem
         }
 
         const PAYLOAD = {
-            amount: `${AMOUNT}`,
+            id: this._transactionId,
+            amount: AMOUNT,
             category_id: CATEGORY_ID,
             date: DATE,
             description: DESCRIPTION,
-            due: `${DUE}`,
+            due: DUE,
             from_bank: FROM_BANK,
             to_bank: TO_BANK,
-            type: TYPE,
-            due_id: DUE_ID
+            type: Number(TYPE),
+            due_id: DUE ? DUE_ID : undefined
         };
 
         this._service.update(this._transactionId, PAYLOAD).subscribe(response => {
