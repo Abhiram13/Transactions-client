@@ -37,5 +37,6 @@ export const routes: Routes = [
         { path: "", component: DueListComponent },
         { path: "add", component: DueConfigureComponent},
         { path: ":dueId", component: DueTransactionsComponent},
+        { path: "edit/:dueId", component: DueConfigureComponent},
     ]},
 ];

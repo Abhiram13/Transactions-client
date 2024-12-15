@@ -1,5 +1,19 @@
-<button mat-flat-button color="primary" (click)="toAddView()">Add</button>
-<mat-list *ngFor="let due of dues">
-    <mat-list-item (click)="toDueTransactions(due.id)">{{due.description}}</mat-list-item>
-    <mat-divider></mat-divider>
-</mat-list>
+<section style="margin: 30px;">
+    <button mat-flat-button color="primary" (click)="toAddView()">Add</button>
+    <mat-list *ngFor="let due of dues">
+        <mat-list-item>
+            <div style="display: grid; grid-template-columns: 80% 20%;">
+                <span (click)="toDueTransactions(due.id)">{{due.description}}</span>
+                <div style="display: flex; justify-content: space-between;">
+                    <div (click)="toEditView(due.id)">
+                        <mat-icon>edit</mat-icon>
+                    </div>
+                    <!-- <div>
+                        <mat-icon>delete</mat-icon>
+                    </div> -->
+                </div>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+    </mat-list>
+</section>
