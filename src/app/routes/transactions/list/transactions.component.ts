@@ -45,12 +45,12 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     public dataSource: TransactionNS.ListViewNS.IList[] = [];
     public categories: TransactionNS.ListViewNS.ICategory[] = [];
     public banks: TransactionNS.ListViewNS.IBank[] = [];
-    public mapOfMonths: Map<number, string> = new Map();
-    public month: number = new Date().getMonth() + 1;
     public selectedMonth: string = "";
     public displayType: DisplayType = "transaction";
+    private _monthsMap: Map<number, string> = new Map();
+    private _month: number = new Date().getMonth() + 1;
     private _subscription: Subscription = new Subscription();
-    private _selectedYear: number = new Date().getFullYear();
+    private _year: number = new Date().getFullYear();
 
     /**
      * @param _transaction Service that allows to call `transactions` APIs as methods
@@ -61,42 +61,43 @@ export class TransactionListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.displayType = this._activeRoute.snapshot.queryParams?.['type'] || 'transaction';
-        this.month = Number(this._activeRoute.snapshot.queryParams?.['month']) || Number(this.month) || new Date().getMonth() + 1;
-        this.monthInit();
-        this.fetchTransactions();
+        this._month = Number(this._activeRoute.snapshot.queryParams?.['month']) || Number(this._month) || new Date().getMonth() + 1;
+        this._year = Number(this._activeRoute.snapshot.queryParams?.['year']) || new Date().getFullYear();
+        this._monthInit();
+        this._fetchTransactions();
     }
 
-    private monthInit(): void {
-        this.mapOfMonths.set(1, 'Jan');
-        this.mapOfMonths.set(2, 'Feb');
-        this.mapOfMonths.set(3, 'Mar');
-        this.mapOfMonths.set(4, 'Apr');
-        this.mapOfMonths.set(5, 'May');
-        this.mapOfMonths.set(6, 'Jun');
-        this.mapOfMonths.set(7, 'Jul');
-        this.mapOfMonths.set(8, 'Aug');
-        this.mapOfMonths.set(9, 'Sep');
-        this.mapOfMonths.set(10, 'Oct');
-        this.mapOfMonths.set(11, 'Nov');
-        this.mapOfMonths.set(12, 'Dec');
+    private _monthInit(): void {
+        this._monthsMap.set(1, 'Jan');
+        this._monthsMap.set(2, 'Feb');
+        this._monthsMap.set(3, 'Mar');
+        this._monthsMap.set(4, 'Apr');
+        this._monthsMap.set(5, 'May');
+        this._monthsMap.set(6, 'Jun');
+        this._monthsMap.set(7, 'Jul');
+        this._monthsMap.set(8, 'Aug');
+        this._monthsMap.set(9, 'Sep');
+        this._monthsMap.set(10, 'Oct');
+        this._monthsMap.set(11, 'Nov');
+        this._monthsMap.set(12, 'Dec');
 
-        this.selectedMonth = this.mapOfMonths.get(this.month) || this.selectedMonth;
+        this.selectedMonth = this._monthsMap.get(this._month) || this.selectedMonth;
     }
 
-    private fetchTransactions(): void {
+    private _fetchTransactions(): void {
         const queryParams = {
-            month: ('0' + this.month).slice(-2),
-            year: this._selectedYear,
+            month: ('0' + this._month).slice(-2),
+            year: this._year,
             type: this.displayType,
         };
 
         this._subscription = this._transaction.list<TransactionNS.ListViewNS.IResponse>(queryParams).subscribe({
-            next: this.fetchTransactionsSuccess.bind(this),
-            error: this.fetchTransactionsError.bind(this)
+            next: this._fetchTransactionsSuccess.bind(this),
+            error: this._fetchTransactionsError.bind(this)
         });
     }
 
-    private fetchTransactionsSuccess(response: IApiResonse<TransactionNS.ListViewNS.IResponse>): void {
+    private _fetchTransactionsSuccess(response: IApiResonse<TransactionNS.ListViewNS.IResponse>): void {
         if (response?.status_code === StatusCode.OK) {
             this.dataSource = response?.result?.transactions || [];
             this.count = response?.result?.total_count || 0;
@@ -106,7 +107,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
         }
     }
 
-    private fetchTransactionsError(error: Error): void {
+    private _fetchTransactionsError(error: Error): void {
         // this.FOOTER.invoke(error?.message || "Something went wrong", "Dismiss");
     }
 
@@ -119,21 +120,35 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     }
 
     public previousMonth(): void {
-        if (!this.month) this.month = 12;
-        this.month--;
-        this.selectedMonth = this.mapOfMonths.get(this.month) || this.selectedMonth;
-        this._setQueryParam({month: this.month});
-        this.fetchTransactions();
+        --this._month;
+        
+        if (!this._month) {
+            this._month = 12;
+            --this._year;
+        }
+        
+        this.selectedMonth = this._monthsMap.get(this._month) || this.selectedMonth;
+        this._setQueryParam({month: this._month, year: this._year});
+        this._fetchTransactions();
     }
 
     public nextMonth(): void {
-        if (this.month === 12) this.month = 1;
-        this.month++;
-        this.selectedMonth = this.mapOfMonths.get(this.month) || this.selectedMonth;
-        this._setQueryParam({month: this.month});
-        this.fetchTransactions();
+        ++this._month;
+        
+        if (this._month > 12) {
+            this._month = 1;
+            ++this._year;
+        }
+
+        this.selectedMonth = this._monthsMap.get(this._month) || this.selectedMonth;
+        this._setQueryParam({month: this._month, year: this._year});
+        this._fetchTransactions();
     }
 
+    /**
+     * Sets month and year query params in the current route URL
+     * @param {object} params - the key value pair values to set in current URL query params
+     */
     private _setQueryParam(params: object): void {
         this._router.navigate(['.'], { relativeTo: this._activeRoute, queryParams: { 
             ...this._activeRoute.snapshot.queryParams,
@@ -144,6 +159,6 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     public onMenuSelectItem(item: DisplayType): void {
         this.displayType = item;
         this._setQueryParam({type: item});
-        this.fetchTransactions();
+        this._fetchTransactions();
     }
 }
