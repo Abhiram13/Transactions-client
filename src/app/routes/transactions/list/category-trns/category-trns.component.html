@@ -1,5 +1,5 @@
 <table [margin]="'0 0 25px 0'" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-   <!-- Date Column -->
+   <!-- Data Column -->
    <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef>Category</th>
       <td mat-cell *matCellDef="let element" (click)="toCategoryView(element.id)">{{element.category}}</td>
