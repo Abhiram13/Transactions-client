@@ -40,7 +40,7 @@ export class CategoryTrnsComponent implements OnChanges, AfterViewInit {
     private _getQueryParams(): DateParams {
         const params: string[] = window.location.search.split("?")?.[1].split("&");
         const obj: DateParams = {
-            month: new Date().getMonth().toString().padStart(2, '0'),
+            month: (new Date().getMonth() + 1).toString().padStart(2, '0'),
             year: new Date().getFullYear().toString(),
         };
         params?.map(param => {
