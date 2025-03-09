@@ -5,11 +5,11 @@
        <div class="transactions">
           <div *ngFor="let transaction of bank.transactions" class="box">
              <p>{{transaction.description}}</p>
-             <p *ngIf="transaction.type === 1" class="debit">{{transaction.amount | amountFormatter}}</p>
+             <p *ngIf="transaction.type === 1" class="debit">{{transaction.amount | amountFormatter}}</p> 
              <p *ngIf="transaction.type === 2" class="credit">{{transaction.amount | amountFormatter}}</p>
              <p *ngIf="transaction.type === 3" class="partial-debit">{{transaction.amount | amountFormatter}}</p>
              <p *ngIf="transaction.type === 4" class="partial-credit">{{transaction.amount | amountFormatter}}</p>
-          </div>         
+          </div>
        </div>
     </div>
  </section>
