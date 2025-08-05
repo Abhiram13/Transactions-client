@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } f
 import { provideNativeDateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CategoryService } from '../../../services/category.service';
 import { BankService } from '../../../services/bank.service';
-import { CategoryNS, BankNS, StatusCode, TransactionNS, DueNS } from "../../../types/export.types";
+import { CategoryNS, BankNS, StatusCode, TransactionNS, DueNS, DueListNS } from "../../../types/export.types";
 import { FooterService } from '../../../services/footer.service';
 import { TransactionService } from '../../../services/transactions.service';
 import { DueConfigureComponent } from './due-configure/due-configure.component';
@@ -14,14 +14,6 @@ import { ActivatedRoute } from '@angular/router';
 import ITransactionInsertPayload = TransactionNS.ITransactionInsertPayload;
 import { DueService } from '../../../services/due.service';
 
-interface IDue {
-    description: string;
-    to_bank: string;
-    amount: number;
-    status: number;
-    id: string;
-}
-
 @Component({standalone: true, template: ""})
 class TransactionConfigureComponent implements OnInit {
     public formGroup!: FormGroup;
@@ -30,7 +22,7 @@ class TransactionConfigureComponent implements OnInit {
     public todayDate: Date = new Date();
     public isSubmitTriggered: boolean = false;
     public isDue: boolean = false;
-    public dues: IDue[] = [];
+    public dues: DueListNS.IDue[] = [];
 
     @ViewChild("formDirective")
     public formDirective!: FormGroupDirective;
@@ -77,7 +69,7 @@ class TransactionConfigureComponent implements OnInit {
     }
     
     protected _fetchDues(): void {
-        this._dueService.list<IDue[]>().subscribe(response => {
+        this._dueService.list<DueListNS.IDue[]>({filter: "active"}).subscribe(response => {
             this.dues = response?.result || [];
         });
     }

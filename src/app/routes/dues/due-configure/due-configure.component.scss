@@ -1,0 +1,28 @@
+#form-section {
+    margin: 30px auto;
+    width: 60%;
+
+    h1 {
+        color: var(--bt-toggle-text);
+    }
+
+    form#form-group {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        gap: 30px;
+        grid-template-rows: 80px 80px;
+        align-items: center;
+        width: 100%;
+        margin: 30px auto;        
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #form-section {
+        width: 75%;
+
+        form#form-group {
+            grid-template-columns: auto;
+        }
+    }    
+}

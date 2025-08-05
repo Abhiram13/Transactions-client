@@ -2,6 +2,7 @@ import { ContentChild, Injectable, ViewChild, ViewContainerRef } from "@angular/
 import { FooterComponent } from "../components/footer/footer.component";
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+// TODO: Snack based on Info, Warning, Error
 @Injectable({ providedIn: 'root' })
 export class FooterService {
     constructor (private readonly SNACK: MatSnackBar) {}

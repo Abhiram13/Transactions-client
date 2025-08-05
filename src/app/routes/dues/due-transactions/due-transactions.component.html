@@ -1,11 +1,15 @@
 <section style="margin: 30px;">    
-    <div style="display: flex; align-items: center;">
-        <h3 style="font-weight: 500; margin: 0;">{{result.description}}</h3>
-        <span *ngIf="result.status === 1" style="background-color: rgb(8, 184, 8); color: white; padding: 0px 6px; font-size: 10px; border-radius: 5px; margin-left: 5px;">Active</span>
-        <span *ngIf="result.status === 2" style="background-color: rgb(159, 70, 235); color: white; padding: 0px 6px; font-size: 10px; border-radius: 5px; margin-left: 5px;">Ended</span>
-        <span *ngIf="result.status === 3" style="background-color: rgb(255, 119, 0); color: white; padding: 0px 6px; font-size: 10px; border-radius: 5px; margin-left: 5px;">Hold</span>        
+    <div class="mb-2" style="display: flex; align-items: center;">
+        <h3 style="font-weight: 500; margin: 0;">{{details.description}}</h3>
+        <span *ngIf="details.status === 1" style="background-color: rgb(8, 184, 8); color: white; padding: 0px 6px; font-size: 10px; border-radius: 5px; margin-left: 5px;">Active</span>
+        <span *ngIf="details.status === 2" style="background-color: rgb(159, 70, 235); color: white; padding: 0px 6px; font-size: 10px; border-radius: 5px; margin-left: 5px;">Ended</span>
+        <span *ngIf="details.status === 3" style="background-color: rgb(255, 119, 0); color: white; padding: 0px 6px; font-size: 10px; border-radius: 5px; margin-left: 5px;">Hold</span>
+        <span *ngIf="details.status === 4" style="background-color: rgb(32, 131, 253); color: white; padding: 0px 6px; font-size: 10px; border-radius: 5px; margin-left: 5px;">In Progress</span>
+        <span *ngIf="details.status === 5" style="background-color: rgb(85, 85, 85); color: white; padding: 0px 6px; font-size: 10px; border-radius: 5px; margin-left: 5px;">In Active</span>        
     </div>
-    <div *ngFor="let transaction of result.transactions" class="d-grid list">
+    <p class="white"><b>Pricipal Amount: </b>{{details.principal_amount}}</p>
+    <p class="white"><b>Current Amount: </b>{{result?.current_principal}}</p>
+    <div *ngFor="let transaction of result?.transactions" class="d-grid list">
         <div id="details-block">
             <p class="details-text">{{transaction.description}}</p>
             <!-- <p class="details-text">From: {{transaction.from_bank || '---'}}</p> -->

@@ -9,4 +9,5 @@ export enum StatusCode {
    NOT_FOUND = 404,
    SERVER_ERROR = 500,
    TIMEOUT = 504,
+   AMBIGUOUS = 300,
 }
