@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 export interface IApiResonse<T extends object = {}> {
    status_code: StatusCode;
    message?: string;
+   trace_id: string;
    result?: T;
 }
 

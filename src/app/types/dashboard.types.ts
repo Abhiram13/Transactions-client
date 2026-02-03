@@ -137,3 +137,12 @@ export namespace DueNS {
         due_amount: number;
     }
 }
+
+export namespace BigQueryNS {
+    export interface ITransactionsListByMonth {
+        debit: number;
+        credit: number;
+        date: string;
+        count: number;
+    }
+}

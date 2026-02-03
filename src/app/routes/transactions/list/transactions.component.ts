@@ -15,6 +15,8 @@ import { AmountFormatterPipe } from '../../../pipes/amount-formatter.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { BankTrnsComponent } from './bank-trns/bank-trns.component';
+import { BigQueryService } from '../../../services/bigquery.service';
+import { BigQueryNS } from '../../../types/dashboard.types';
 
 type DisplayType = "transaction" | "category" | "bank";
 
@@ -42,7 +44,8 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     public error: boolean = false;
     public message: string = "";
     public count: number = 0;
-    public dataSource: TransactionNS.ListViewNS.IList[] = [];
+    // public dataSource: TransactionNS.ListViewNS.IList[] = [];
+    public dataSource: BigQueryNS.ITransactionsListByMonth[] = [];
     public categories: TransactionNS.ListViewNS.ICategory[] = [];
     public banks: TransactionNS.ListViewNS.IBank[] = [];
     public selectedMonth: string = "";
@@ -57,7 +60,12 @@ export class TransactionListComponent implements OnInit, OnDestroy {
      * @param _router
      * @param _activeRoute Current active route instance
      */
-    constructor(private readonly _transaction: TransactionService, private readonly _router: Router, private readonly _activeRoute: ActivatedRoute) { }
+    constructor(
+        private readonly _transaction: TransactionService, 
+        private readonly _router: Router, 
+        private readonly _activeRoute: ActivatedRoute,
+        private readonly _bigQueryService: BigQueryService
+    ) { }
 
     ngOnInit(): void {
         this.displayType = this._activeRoute.snapshot.queryParams?.['type'] || 'transaction';
@@ -85,24 +93,38 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     }
 
     private _fetchTransactions(): void {
-        const queryParams = {
-            month: ('0' + this._month).slice(-2),
-            year: this._year,
-            type: this.displayType,
-        };
+        // const queryParams = {
+        //     month: ('0' + this._month).slice(-2),
+        //     year: this._year,
+        //     type: this.displayType,
+        // };
 
-        this._subscription = this._transaction.list<TransactionNS.ListViewNS.IResponse>(queryParams).subscribe({
+        // this._subscription = this._transaction.list<TransactionNS.ListViewNS.IResponse>(queryParams).subscribe({
+        //     next: this._fetchTransactionsSuccess.bind(this),
+        //     error: this._fetchTransactionsError.bind(this)
+        // });
+        this._bigQueryService.transactionsListByMonth(this._month, this._year).subscribe({
             next: this._fetchTransactionsSuccess.bind(this),
-            error: this._fetchTransactionsError.bind(this)
         });
     }
 
-    private _fetchTransactionsSuccess(response: IApiResonse<TransactionNS.ListViewNS.IResponse>): void {
+    // private _fetchTransactionsSuccess(response: IApiResonse<TransactionNS.ListViewNS.IResponse>): void {
+    //     if (response?.status_code === StatusCode.OK) {
+    //         this.dataSource = response?.result?.transactions || [];
+    //         this.count = response?.result?.total_count || 0;
+    //         this.categories = response?.result?.categories || [];
+    //         this.banks = response?.result?.banks || [];
+    //         return;
+    //     }
+    // }
+
+    private _fetchTransactionsSuccess(response: IApiResonse<BigQueryNS.ITransactionsListByMonth[]>): void {
         if (response?.status_code === StatusCode.OK) {
-            this.dataSource = response?.result?.transactions || [];
-            this.count = response?.result?.total_count || 0;
-            this.categories = response?.result?.categories || [];
-            this.banks = response?.result?.banks || [];
+            // this.dataSource = response?.result?.transactions || [];
+            // this.count = response?.result?.total_count || 0;
+            // this.categories = response?.result?.categories || [];
+            // this.banks = response?.result?.banks || [];
+            this.dataSource = response.result || [];
             return;
         }
     }

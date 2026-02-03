@@ -7,6 +7,7 @@ import { MarginDirective } from '../../../../directives/directives';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { BigQueryNS } from '../../../../types/dashboard.types';
 
 @Component({
     selector: 'transactions-list',
@@ -24,7 +25,8 @@ import { CommonModule } from '@angular/common';
     styleUrl: './transactions-list.component.scss'
 })
 export class TransactionsTableComponent  {
-    @Input() public dataSource: TransactionNS.ListViewNS.IList[] = [];
+    // @Input() public dataSource: TransactionNS.ListViewNS.IList[] = [];
+    @Input() public dataSource: BigQueryNS.ITransactionsListByMonth[] = [];
 
     public columns: string[] = ['date', 'debit', 'credit', 'count'];
 

@@ -1,2 +1,2 @@
-const API_URL = "http://localhost:3002";
-const API_KEY = "MJAhQCrhaP5bJXUaywYUUhKgEUWb5C6HFimIpIg9zsOZCvHugRH9lgAlDi1MZ31iel5R"; // LOCAL USE
+const API_URL = "http://localhost:3000";
+const API_KEY = "r2mdo3Ya3bHI3v5OIO2qAkdJthxGWzAWlahriI8crDtmAt8GcakvMyxebaMRu"; // LOCAL USE
