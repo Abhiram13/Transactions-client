@@ -72,6 +72,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
         this._month = Number(this._activeRoute.snapshot.queryParams?.['month']) || Number(this._month) || new Date().getMonth() + 1;
         this._year = Number(this._activeRoute.snapshot.queryParams?.['year']) || new Date().getFullYear();
         this._monthInit();
+        this._fetchCount();
         this._fetchTransactions();
     }
 
@@ -118,6 +119,12 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     //     }
     // }
 
+    private _fetchCount() {
+        this._transaction.countOfTransactionsByMonth(this._month, this._year).subscribe(response => {
+            this.count = response.result || 0;
+        });
+    }
+
     private _fetchTransactionsSuccess(response: IApiResonse<BigQueryNS.ITransactionsListByMonth[]>): void {
         if (response?.status_code === StatusCode.OK) {
             // this.dataSource = response?.result?.transactions || [];
@@ -151,6 +158,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
         
         this.selectedMonth = this._monthsMap.get(this._month) || this.selectedMonth;
         this._setQueryParam({month: this._month, year: this._year});
+        this._fetchCount();
         this._fetchTransactions();
     }
 
@@ -164,6 +172,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
 
         this.selectedMonth = this._monthsMap.get(this._month) || this.selectedMonth;
         this._setQueryParam({month: this._month, year: this._year});
+        this._fetchCount();
         this._fetchTransactions();
     }
 

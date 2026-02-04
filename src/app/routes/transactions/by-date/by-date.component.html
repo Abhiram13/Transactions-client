@@ -3,9 +3,9 @@
     <div *ngFor="let transaction of list.transactions" class="d-grid list">
         <div id="details-block">
             <p class="details-text">{{transaction.description}}</p>
-            <p class="details-text">From: {{transaction.from_bank || '---'}}</p>
+            <!-- <p class="details-text">From: {{transaction.from_bank || '---'}}</p>
             <p class="details-text">To: {{transaction.to_bank || '---'}}</p>
-            <p class="details-text">Category: {{transaction.category}}</p>
+            <p class="details-text">Category: {{transaction.category}}</p> -->
         </div>
         <div class="w-100">
             <div class="d-flex flex-row" id="amount-block">
@@ -14,8 +14,8 @@
             </div>
             <p *ngIf="transaction.type === 1" class="details-text debit" style="font-size: 11px; text-align: end;">Debit</p>
             <p *ngIf="transaction.type === 2" class="details-text credit" style="font-size: 11px; text-align: end;">Credit</p>
-            <p *ngIf="transaction.type === 3" class="details-text partial-debit" style="font-size: 11px; text-align: end;">Partial Debit</p>
-            <p *ngIf="transaction.type === 4" class="details-text partial-credit" style="font-size: 11px; text-align: end;">Partial Credit</p>
+            <!-- <p *ngIf="transaction.type === 3" class="details-text partial-debit" style="font-size: 11px; text-align: end;">Partial Debit</p>
+            <p *ngIf="transaction.type === 4" class="details-text partial-credit" style="font-size: 11px; text-align: end;">Partial Credit</p> -->
 
             <button class="menu-button" style="margin-left: 60%" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <mat-icon>more_vert</mat-icon>

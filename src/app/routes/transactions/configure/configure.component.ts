@@ -47,6 +47,7 @@ class TransactionConfigureComponent implements OnInit {
     ) {
         this.formGroup = this._builder.group({
             amount: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,4})?$/)]],
+            actualAmount: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,4})?$/)]],
             type: ['', [Validators.required]],
             description: ['', [Validators.required]],
             date: [new Date(), [Validators.required]],
@@ -84,6 +85,10 @@ class TransactionConfigureComponent implements OnInit {
 
     public get amount(): FormControl {
         return this.formGroup.get("amount") as FormControl;
+    }
+
+    public get actualAmount(): FormControl {
+        return this.formGroup.get('actualAmount') as FormControl;
     }
 
     public get type(): FormControl {
@@ -160,6 +165,7 @@ export class AddConfigureComponent extends TransactionConfigureComponent impleme
     onSubmit(): void {
         try {
             const AMOUNT = this.formGroup.get('amount')?.value;
+            const ACTUAL_AMOUNT = this.formGroup.get('actualAmount')?.value;
             const TYPE = this.formGroup.get('type')?.value;
             const DESCRIPTION = this.formGroup.get('description')?.value;
             const DATE = this.formGroup.get('date')?.value;
@@ -168,7 +174,7 @@ export class AddConfigureComponent extends TransactionConfigureComponent impleme
             const CATEGORYID = this.formGroup.get('category_id')?.value;
             const DUE = this.formGroup.get('due')?.value;
             const DUE_ID = this.formGroup.get('due_id')?.value;
-            const TRANSACTION = new Transaction(AMOUNT, CATEGORYID, DATE, DESCRIPTION, DUE, FROMBANK, TOBANK, TYPE, DUE_ID);
+            const TRANSACTION = new Transaction(AMOUNT, ACTUAL_AMOUNT, TYPE, CATEGORYID, DATE, DESCRIPTION, DUE, FROMBANK, TOBANK, DUE_ID);
 
             if (this._isFormInValid()) {
                 this._footer.invoke("Provide valid details", "Dismiss");
@@ -219,6 +225,7 @@ export class EditConfigureComponent extends TransactionConfigureComponent implem
 
     private _setTransactionForm(transaction: ITransactionInsertPayload): void {
         this.formGroup.get("amount")?.setValue(transaction.amount);
+        this.formGroup.get("actualAmount")?.setValue(transaction.amount);
         this.formGroup.get("type")?.setValue(`${transaction.type}`);
         this.formGroup.get("description")?.setValue(transaction.description);
         this.formGroup.get("date")?.setValue(transaction.date);
@@ -231,6 +238,7 @@ export class EditConfigureComponent extends TransactionConfigureComponent implem
 
     public onSubmit(): void {
         const AMOUNT = this.formGroup.get('amount')?.value;
+        const ACTUAL_AMOUNT = this.formGroup.get('actualAmount')?.value;
         const TYPE = this.formGroup.get('type')?.value;
         const DESCRIPTION = this.formGroup.get('description')?.value;
         const DATE = this._modifyDate(this.formGroup.get('date')?.value);
@@ -248,13 +256,13 @@ export class EditConfigureComponent extends TransactionConfigureComponent implem
         const PAYLOAD = {
             id: this._transactionId,
             amount: AMOUNT,
+            actual_amount: ACTUAL_AMOUNT,
             category_id: CATEGORY_ID,
             date: DATE,
             description: DESCRIPTION,
             due: DUE,
             from_bank: FROM_BANK,
             to_bank: TO_BANK,
-            type: Number(TYPE),
             due_id: DUE ? DUE_ID : undefined
         };
 
@@ -271,25 +279,27 @@ export class EditConfigureComponent extends TransactionConfigureComponent implem
 
 class Transaction implements TransactionNS.ITransactionInsertPayload {
     amount: number;
-    category_id: string;
+    actual_amount: number;
+    type: TransactionNS.TransactionType;
+    category_id: number;
     date: string;
     description: string;
     due: boolean;
-    from_bank: string;
-    to_bank: string;
-    type: number;
-    due_id?: string | undefined;
+    from_bank: number | null;
+    to_bank: number | null;    
+    due_id?: number | null;
 
-    constructor(amount: string, category: string, date: string, description: string, due: boolean, fromBank: string, toBank: string, type: TransactionNS.TransactionType, dueId?: string) {
+    constructor(amount: string, actualAmount: string, type: number, category: string, date: string, description: string, due: boolean, fromBank: string, toBank: string, dueId?: string) {
         this.amount = parseFloat(amount);
-        this.category_id = category || "";
+        this.actual_amount = parseFloat(actualAmount);
+        this.category_id = Number(category);
         this.description = description || "";
         this.due = !!due;
-        this.from_bank = fromBank || "";
-        this.to_bank = toBank || "";
+        this.from_bank = Number(fromBank) || null;
+        this.to_bank = Number(toBank) || null;
         this.type = Number(type) || TransactionNS.TransactionType.Debit;
         this.date = this.modifyDate(date);
-        this.due_id = dueId;
+        this.due_id = Number(dueId) || null;
     }
 
     private modifyDate(date: string): string {

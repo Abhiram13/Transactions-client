@@ -1,7 +1,7 @@
 import {StatusCode} from "./export.types";
 import { Observable } from "rxjs";
 
-export interface IApiResonse<T extends object = {}> {
+export interface IApiResonse<T extends object | number = {}> {
    status_code: StatusCode;
    message?: string;
    trace_id: string;

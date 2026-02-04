@@ -10,7 +10,7 @@ type ListByBank = TransactionNS.ListByBank.IResult;
 
 @Injectable({providedIn: 'any'})
 export class TransactionService extends ComponentService implements IComponentService {
-    protected override readonly PREFIX: string = "/transactions";
+    protected override readonly PREFIX: string = "/api/transactions";
 
     constructor(protected override readonly HTTP: HttpService) {
         super(HTTP);
@@ -34,5 +34,13 @@ export class TransactionService extends ComponentService implements IComponentSe
         if (year) params = params.set("year", year);
 
         return this.HTTP.get<ListByBank>(this.PREFIX + '/bank/' + bankId, params);
+    }
+
+    public countOfTransactionsByMonth(month?: number, year?: number): Observable<IApiResonse<number>> {
+        let params: HttpParams = new HttpParams();
+        if (month) params = params.append("month", month);
+        if (year) params = params.set("year", year);
+
+        return this.HTTP.get<number>(`${this.PREFIX}/count`, params);
     }
 }

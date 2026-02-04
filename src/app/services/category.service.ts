@@ -8,7 +8,7 @@ import { ComponentService } from "./export.service";
  */
 @Injectable({ providedIn: 'any' })
 export class CategoryService extends ComponentService implements IComponentService {
-    protected override readonly PREFIX: string = "/category";
+    protected override readonly PREFIX: string = "/api/categories";
 
     constructor(protected override readonly HTTP: HttpService) { 
         super(HTTP);

@@ -10,14 +10,19 @@
         </mat-form-field>
         <!-- Amount Field -->
 
+        <!-- Actual Amount Field -->
+        <mat-form-field matField>
+            <mat-label>Actual Amount</mat-label>
+            <input myInput matInput [formControl]="actualAmount">
+        </mat-form-field>
+        <!-- Actual Amount Field -->
+
         <!-- Transaction Type Field -->
         <mat-form-field>
             <mat-label>Transaction type</mat-label>
             <mat-select [formControl]="type">
                 <mat-option value="1">Debit</mat-option>
                 <mat-option value="2">Credit</mat-option>
-                <mat-option value="3">Partial Debit</mat-option>
-                <mat-option value="4">Partial Credit</mat-option>
             </mat-select>
             <mat-error *ngIf="type?.errors?.['required']">Select a Transaction type</mat-error>
         </mat-form-field>
@@ -73,18 +78,18 @@
         <!-- Date Field -->
 
         <!-- Due Field -->
-        <mat-slide-toggle [formControl]="due">Due</mat-slide-toggle>
+        <!-- <mat-slide-toggle [formControl]="due">Due</mat-slide-toggle> -->
         <!-- Due Field -->
 
         <!-- Due Component -->
-        <mat-form-field *ngIf="isDue">
+        <!-- <mat-form-field *ngIf="isDue">
             <mat-label>Dues</mat-label>
             <mat-select [formControl]="due_id">
                 <mat-option value="">---</mat-option>
                 <mat-option *ngFor="let due of dues" value="{{due.id}}">{{due.description}}</mat-option>
             </mat-select>
-            <!-- <mat-error *ngIf="type?.errors?.['required']">Select a Transaction type</mat-error> -->
-        </mat-form-field>
+            <mat-error *ngIf="type?.errors?.['required']">Select a Transaction type</mat-error>
+        </mat-form-field> -->
         <!-- Due Component -->
 
         <button mat-flat-button color="primary" type="submit">{{ title }}</button>

@@ -57,20 +57,20 @@ export namespace TransactionNS {
     export enum TransactionType {
         Debit = 1,
         Credit = 2,
-        PartialDebit = 3,
-        PartialCredit = 4
     }
 
     export interface ITransactionInsertPayload {
         amount: number | string;
+        actual_amount: number | string;
         type: TransactionType;
         description: string;
         date: string;
         due: boolean;
-        from_bank: string;
-        to_bank: string;
-        category_id: string;
-        due_id?: string;
+        from_bank: number | null;
+        to_bank: number | null;
+        category_id: number | null;
+        due_id?: number | null;
+        emi_id?: number | null;
     }
 
     export namespace ListByCategory {

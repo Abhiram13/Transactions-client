@@ -37,8 +37,8 @@ export class ByDateComponent implements OnInit {
         this.date = this._activeRoute.snapshot.params?.['date'];
         this._borderColorMap.set(TransactionNS.TransactionType.Debit, 'debit');
         this._borderColorMap.set(TransactionNS.TransactionType.Credit, 'credit');
-        this._borderColorMap.set(TransactionNS.TransactionType.PartialCredit, 'partial-credit');
-        this._borderColorMap.set(TransactionNS.TransactionType.PartialDebit, 'partial-debit');
+        // this._borderColorMap.set(TransactionNS.TransactionType.PartialCredit, 'partial-credit');
+        // this._borderColorMap.set(TransactionNS.TransactionType.PartialDebit, 'partial-debit');
         this._fetchData();
     }
 
