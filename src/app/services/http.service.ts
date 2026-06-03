@@ -43,6 +43,6 @@ export class HttpService {
     }
 
     update<R extends {}>(url: string, body: R): Observable<IApiResonse> {
-        return this.http.patch<IApiResonse>(`${this.API}${url}`, body);
+        return this.http.put<IApiResonse>(`${this.API}${url}`, body);
     }
 }

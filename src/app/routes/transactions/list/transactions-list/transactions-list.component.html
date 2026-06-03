@@ -2,15 +2,13 @@
     <!-- Date Column -->
     <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>Date</th>
-        <td mat-cell *matCellDef="let element" (click)="toDateView(element.date)">{{ element.date | dateFormatter }}
+        <td mat-cell *matCellDef="let element" (click)="toDateView(element.transaction_date)">
+            {{ element.transaction_date | dateFormatter }}
+<!--            {{ element.transaction_date }}-->
         </td>
     </ng-container>
 
     <!-- Count Column -->
-    <ng-container matColumnDef="count">
-        <th mat-header-cell *matHeaderCellDef>Count</th>
-        <td mat-cell *matCellDef="let element">{{ element.count }}</td>
-    </ng-container>
 
     <!-- Debit Column -->
     <ng-container matColumnDef="debit">

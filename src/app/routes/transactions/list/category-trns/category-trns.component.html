@@ -2,7 +2,8 @@
    <!-- Data Column -->
    <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef>Category</th>
-      <td mat-cell *matCellDef="let element" (click)="toCategoryView(element.id)">{{element.category}}</td>
+      <td mat-cell *matCellDef="let element">{{element.name}}</td> 
+      <!-- (click)="toCategoryView(element.id)" -->
    </ng-container>
 
    <!-- Count Column -->

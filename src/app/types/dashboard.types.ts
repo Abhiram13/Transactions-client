@@ -97,6 +97,17 @@ export namespace TransactionNS {
             data: ListByCategory.IData[];
         }
     }
+
+    export interface IMonthlyTransactions {
+        debit: number;
+        credit: number;
+        transaction_date: string;
+    }
+
+    export interface ICategoryBankMonthlyTransactions {
+        amount: number;
+        name: string;
+    }
 }
 
 export namespace BankNS {

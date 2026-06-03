@@ -43,4 +43,28 @@ export class TransactionService extends ComponentService implements IComponentSe
 
         return this.HTTP.get<number>(`${this.PREFIX}/count`, params);
     }
+
+    public listOfTransactionsInMonth(month?: number | string, year?: number): Observable<IApiResonse<TransactionNS.IMonthlyTransactions[]>> {
+        let params: HttpParams = new HttpParams();
+        if (month) params = params.append("month", month);
+        if (year) params = params.set("year", year);
+
+        return this.HTTP.get<TransactionNS.IMonthlyTransactions[]>(`${this.PREFIX}`, params);
+    }
+
+    public listOfCategoryTransactionsInMonth(month?: number | string, year?: number): Observable<IApiResonse<TransactionNS.ICategoryBankMonthlyTransactions[]>> {
+        let params: HttpParams = new HttpParams();
+        if (month) params = params.append("month", month);
+        if (year) params = params.set("year", year);
+
+        return this.HTTP.get<TransactionNS.ICategoryBankMonthlyTransactions[]>(`${this.PREFIX}/categories`, params);
+    }
+
+    public listOfBankTransactionsInMonth(month?: number | string, year?: number): Observable<IApiResonse<TransactionNS.ICategoryBankMonthlyTransactions[]>> {
+        let params: HttpParams = new HttpParams();
+        if (month) params = params.append("month", month);
+        if (year) params = params.set("year", year);
+
+        return this.HTTP.get<TransactionNS.ICategoryBankMonthlyTransactions[]>(`${this.PREFIX}/banks`, params);
+    }
 }

@@ -1,22 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
 import { TransactionService } from '../../../services/export.service';
 import { IApiResonse, StatusCode, TransactionNS } from "../../../types/export.types";
-import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppDirective, MarginDirective, TextDirective } from '../../../directives/directives';
 import { FormModule } from '../../../modules/form.module';
 import { CategoryTrnsComponent } from './category-trns/category-trns.component';
 import { TransactionsTableComponent } from './transactions-list/transactions-list.component';
-import { DateFormatterPipe } from '../../../pipes/date-formatter.pipe';
-import { AmountFormatterPipe } from '../../../pipes/amount-formatter.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { BankTrnsComponent } from './bank-trns/bank-trns.component';
 import { BigQueryService } from '../../../services/bigquery.service';
-import { BigQueryNS } from '../../../types/dashboard.types';
 
 type DisplayType = "transaction" | "category" | "bank";
 
@@ -28,14 +23,10 @@ type DisplayType = "transaction" | "category" | "bank";
     imports: [
         CommonModule,
         MarginDirective,
-        TextDirective,
-        AppDirective,
         FormModule,
         CategoryTrnsComponent,
         TransactionsTableComponent,
         BankTrnsComponent,
-        DateFormatterPipe,
-        AmountFormatterPipe,
         MatIconModule,
         MatMenuModule
     ],
@@ -44,9 +35,9 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     public error: boolean = false;
     public message: string = "";
     public count: number = 0;
-    // public dataSource: TransactionNS.ListViewNS.IList[] = [];
-    public dataSource: BigQueryNS.ITransactionsListByMonth[] = [];
-    public categories: TransactionNS.ListViewNS.ICategory[] = [];
+    public dataSource: TransactionNS.IMonthlyTransactions[] = [];
+    public categoryDataSource: TransactionNS.ICategoryBankMonthlyTransactions[] = [];
+    public bankDataSource: TransactionNS.ICategoryBankMonthlyTransactions[] = [];
     public banks: TransactionNS.ListViewNS.IBank[] = [];
     public selectedMonth: string = "";
     public displayType: DisplayType = "transaction";
@@ -56,13 +47,13 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     private _year: number = new Date().getFullYear();
 
     /**
-     * @param _transaction Service that allows to call `transactions` APIs as methods
+     * @param _transactionService Service that allows to call `transactions` APIs as methods
      * @param _router
      * @param _activeRoute Current active route instance
      */
     constructor(
-        private readonly _transaction: TransactionService, 
-        private readonly _router: Router, 
+        private readonly _transactionService: TransactionService,
+        private readonly _router: Router,
         private readonly _activeRoute: ActivatedRoute,
         private readonly _bigQueryService: BigQueryService
     ) { }
@@ -93,45 +84,51 @@ export class TransactionListComponent implements OnInit, OnDestroy {
         this.selectedMonth = this._monthsMap.get(this._month) || this.selectedMonth;
     }
 
-    private _fetchTransactions(): void {
-        // const queryParams = {
-        //     month: ('0' + this._month).slice(-2),
-        //     year: this._year,
-        //     type: this.displayType,
-        // };
+    private _fetchTransactions(type: DisplayType = "transaction"): void {
+        let displayType = this.displayType || type;
 
-        // this._subscription = this._transaction.list<TransactionNS.ListViewNS.IResponse>(queryParams).subscribe({
-        //     next: this._fetchTransactionsSuccess.bind(this),
-        //     error: this._fetchTransactionsError.bind(this)
-        // });
-        this._bigQueryService.transactionsListByMonth(this._month, this._year).subscribe({
-            next: this._fetchTransactionsSuccess.bind(this),
-        });
+        switch (displayType) {
+            case "bank":
+                this._transactionService.listOfBankTransactionsInMonth(this._month, this._year).subscribe({
+                    next: this._fetchBankTransactionsSuccess.bind(this),
+                });
+                break;
+            case "category":
+                this._transactionService.listOfCategoryTransactionsInMonth(this._month, this._year).subscribe({
+                    next: this._fetchCategoryTransactionsSuccess.bind(this),
+                });
+                break;
+            case "transaction": default:
+                this._transactionService.listOfTransactionsInMonth(this._month, this._year).subscribe({
+                    next: this._fetchTransactionsSuccess.bind(this),
+                });
+                break;
+        } 
     }
 
-    // private _fetchTransactionsSuccess(response: IApiResonse<TransactionNS.ListViewNS.IResponse>): void {
-    //     if (response?.status_code === StatusCode.OK) {
-    //         this.dataSource = response?.result?.transactions || [];
-    //         this.count = response?.result?.total_count || 0;
-    //         this.categories = response?.result?.categories || [];
-    //         this.banks = response?.result?.banks || [];
-    //         return;
-    //     }
-    // }
-
     private _fetchCount() {
-        this._transaction.countOfTransactionsByMonth(this._month, this._year).subscribe(response => {
+        this._transactionService.countOfTransactionsByMonth(this._month, this._year).subscribe(response => {
             this.count = response.result || 0;
         });
     }
 
-    private _fetchTransactionsSuccess(response: IApiResonse<BigQueryNS.ITransactionsListByMonth[]>): void {
+    private _fetchTransactionsSuccess(response: IApiResonse<TransactionNS.IMonthlyTransactions[]>): void {
         if (response?.status_code === StatusCode.OK) {
-            // this.dataSource = response?.result?.transactions || [];
-            // this.count = response?.result?.total_count || 0;
-            // this.categories = response?.result?.categories || [];
-            // this.banks = response?.result?.banks || [];
             this.dataSource = response.result || [];
+            return;
+        }
+    }
+
+    private _fetchCategoryTransactionsSuccess(response: IApiResonse<TransactionNS.ICategoryBankMonthlyTransactions[]>): void {
+        if (response?.status_code === StatusCode.OK) {            
+            this.categoryDataSource = response.result || [];
+            return;
+        }
+    }
+
+    private _fetchBankTransactionsSuccess(response: IApiResonse<TransactionNS.ICategoryBankMonthlyTransactions[]>): void {
+        if (response?.status_code === StatusCode.OK) {            
+            this.bankDataSource = response.result || [];
             return;
         }
     }
@@ -150,12 +147,12 @@ export class TransactionListComponent implements OnInit, OnDestroy {
 
     public previousMonth(): void {
         --this._month;
-        
+
         if (!this._month) {
             this._month = 12;
             --this._year;
         }
-        
+
         this.selectedMonth = this._monthsMap.get(this._month) || this.selectedMonth;
         this._setQueryParam({month: this._month, year: this._year});
         this._fetchCount();
@@ -164,7 +161,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
 
     public nextMonth(): void {
         ++this._month;
-        
+
         if (this._month > 12) {
             this._month = 1;
             ++this._year;
@@ -181,7 +178,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
      * @param {object} params - the key value pair values to set in current URL query params
      */
     private _setQueryParam(params: object): void {
-        this._router.navigate(['.'], { relativeTo: this._activeRoute, queryParams: { 
+        this._router.navigate(['.'], { relativeTo: this._activeRoute, queryParams: {
             ...this._activeRoute.snapshot.queryParams,
             ...params
         }});
@@ -190,6 +187,6 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     public onMenuSelectItem(item: DisplayType): void {
         this.displayType = item;
         this._setQueryParam({type: item});
-        this._fetchTransactions();
+        this._fetchTransactions(item);
     }
 }

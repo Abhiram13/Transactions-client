@@ -5,10 +5,8 @@ import { TransactionNS } from '../../../../types/export.types';
 import { MarginDirective } from '../../../../directives/directives';
 import { AmountFormatterPipe } from '../../../../pipes/amount-formatter.pipe';
 import { MatSort, MatSortModule } from "@angular/material/sort";
-import ICategory = TransactionNS.ListViewNS.ICategory;
 import { Router, ActivatedRoute } from '@angular/router';
 
-type ListViewCategory = TransactionNS.ListViewNS.ICategory;
 type DateParams = {month: string, year: string};
 
 @Component({
@@ -19,11 +17,11 @@ type DateParams = {month: string, year: string};
     styleUrl: './category-trns.component.scss'
 })
 export class CategoryTrnsComponent implements OnChanges, AfterViewInit {
-    @Input() public categories: ListViewCategory[] = [];
+    @Input() public categories: TransactionNS.ICategoryBankMonthlyTransactions[] = [];
     @ViewChild(MatSort) private _sort!: MatSort;
 
     public columns: string[] = ['category', 'amount'];
-    public dataSource: MatTableDataSource<ICategory> = new MatTableDataSource();
+    public dataSource: MatTableDataSource<TransactionNS.ICategoryBankMonthlyTransactions> = new MatTableDataSource();
 
     constructor(private readonly _router: Router, private readonly _activeRoute: ActivatedRoute) { }
 

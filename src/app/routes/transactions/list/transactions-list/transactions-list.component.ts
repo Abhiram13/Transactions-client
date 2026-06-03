@@ -25,10 +25,9 @@ import { BigQueryNS } from '../../../../types/dashboard.types';
     styleUrl: './transactions-list.component.scss'
 })
 export class TransactionsTableComponent  {
-    // @Input() public dataSource: TransactionNS.ListViewNS.IList[] = [];
-    @Input() public dataSource: BigQueryNS.ITransactionsListByMonth[] = [];
+    @Input() public dataSource: TransactionNS.IMonthlyTransactions[] = [];
 
-    public columns: string[] = ['date', 'debit', 'credit', 'count'];
+    public columns: string[] = ['date', 'debit', 'credit'];
 
     constructor (
         private readonly _router: Router,
